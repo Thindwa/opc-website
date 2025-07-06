@@ -47,4 +47,3 @@ Route::get('/video', [FrontendController::class,'video'])->name('video');
 
 Route::get('/departments/{id}', [FrontendController::class, 'departmentShow'])->name('frontend.department.show');
 // Your existing department show route
-

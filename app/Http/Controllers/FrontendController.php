@@ -1,7 +1,8 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Department;
+use App\Models\Page;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -21,10 +22,32 @@ class FrontendController extends Controller
         return view('frontend.profile');
     }
 
+
     public function executive()
     {
-        return view('frontend.executive');
+        $page = Page::where('slug', 'executive-page')->firstOrFail();
+
+        $contentBlocks = collect($page->content);
+
+        // Extract the first image block
+        $imageBlock = $contentBlocks->firstWhere('type', 'App\\Filament\\Blocks\\ImageBlock');
+        $imagePath = $imageBlock['data']['image'] ?? null;
+        $imageCaption = $imageBlock['data']['caption'] ?? null;
+
+        // Exclude image blocks from content
+        $filteredBlocks = $contentBlocks->reject(function ($block) {
+            return $block['type'] === 'App\\Filament\\Blocks\\ImageBlock';
+        })->values()->all(); // reset indexes
+
+        return view('frontend.executive', [
+            'page' => $page,
+            'profileImage' => $imagePath,
+            'profileCaption' => $imageCaption,
+            'filteredContent' => $filteredBlocks,
+        ]);
     }
+
+
 
     public function management()
     {
