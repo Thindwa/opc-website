@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d118ee91056cf6f7991c95168613056e",
+    "content-hash": "a08c6e68cce621f1a174fd4684d6d956",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5453,6 +5453,64 @@
                 }
             ],
             "time": "2025-02-25T09:09:36+00:00"
+        },
+        {
+            "name": "skyraptor/filament-blocks-builder",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bumbummen99/filament-blocks-builder.git",
+                "reference": "4668b5769601a5e1864d88a0f3ba6130b2b451bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bumbummen99/filament-blocks-builder/zipball/4668b5769601a5e1864d88a0f3ba6130b2b451bc",
+                "reference": "4668b5769601a5e1864d88a0f3ba6130b2b451bc",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^3.2.120",
+                "illuminate/support": "^11 | ^12",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "filament/filament": "^3.2.120",
+                "orchestra/testbench": "^9.5 | ^10.0",
+                "orchestra/testbench-dusk": "^9.8 | ^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SkyRaptor\\FilamentBlocksBuilder\\FilamentBlocksBuilderServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SkyRaptor\\FilamentBlocksBuilder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "description": "This Filament PHP plugin adds a BlockBuilder form component, that allows you to create layouts using Blocks. This can be used as a builder for anything: layout, content, data and more.",
+            "keywords": [
+                "blocks",
+                "builder",
+                "content",
+                "data",
+                "filament",
+                "laravel",
+                "layout",
+                "wysiwyg"
+            ],
+            "support": {
+                "issues": "https://github.com/bumbummen99/filament-blocks-builder/issues",
+                "source": "https://github.com/bumbummen99/filament-blocks-builder/tree/0.2.0"
+            },
+            "time": "2025-04-22T15:08:21+00:00"
         },
         {
             "name": "spatie/color",
