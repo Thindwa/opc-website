@@ -155,46 +155,27 @@
           
           <!-- President Image Card -->
           <div class="president-image-card">
-            <img src="{{ asset('frontendassets/images/team/team1.jpg') }}" alt="His Excellency Dr. Lazarus McCarthy Chakwera" class="president-image">
-            <h4 class="mt-3 text-success">His Excellency</h4>
-            <div class="president-info">
-              <h5 class="mb-1">Dr. Lazarus McCarthy Chakwera</h5>
-              <p class="text-muted">President of the Republic of Malawi</p>
-            </div>
+             <img
+              src="{{ $profileImage ? asset('storage/' . $profileImage) : asset('frontendassets/images/services/service2a.jpg') }}"
+              alt="President"
+              class="img-fluid"
+            >
+           
+            @if (!empty($profileCaption))
+            <div class="text-muted small mt-2">{{ $profileCaption }}</div>
+        @endif
           </div>
 
-          <!-- Profile Title -->
-          <h4 class="profile-title">Profile of President Dr. Lazarus McCarthy Chakwera</h4>
-
+         
           <!-- Profile Content -->
           <div class="profile-content">
             
-            <p>His Excellency Dr. Lazarus McCarthy Chakwera, the sixth President of the Republic of Malawi, was sworn into office on June 28, 2020 at Malawi Square, Bingu International Convention Centre in Lilongwe following a landmark election that restored faith in Malawi's democracy.</p>
+            {{-- Render blocks --}}
+          <div class="executive-block-content">
+            {!! \App\Helpers\RenderBlocksHelper::render($filteredContent) !!}
 
-            <p>Before his presidency, Dr. Chakwera served as President of the Malawi Assemblies of God from 1989 until May 2013 when he resigned to contest in the 2014 General Elections as the Malawi Congress Party presidential candidate. Though the election was marred by irregularities, Dr. Chakwera demonstrated statesmanship by accepting the results and serving as Leader of Opposition in the National Assembly, where he won a parliamentary seat.</p>
-
-            <p>The 2019 elections saw history repeat itself with even more glaring irregularities, including widespread use of correction fluid on results sheets. This time, Dr. Chakwera joined forces with Vice President Dr. Saulos Klaus Chilima to challenge the results. Their landmark constitutional case resulted in the nullification of the election - a first in Malawi's history - and set the stage for the 2020 Fresh Presidential Election, which Dr. Chakwera won decisively with 58.57% of the vote.</p>
-
-            <h5 class="mt-4 mb-3 text-success">Early Life and Education</h5>
-            <p>Born on April 5, 1955 in rural Lilongwe to subsistence farmers Earnest and Mallen Chakwera, the President's humble beginnings shaped his character and worldview. Named "Lazarus" after the biblical figure raised from the dead, he overcame childhood hardships that claimed two of his siblings. Dr. Chakwera's academic journey took him from the University of Malawi (BA Philosophy, 1977) to institutions in South Africa and the United States, culminating in a doctorate from Trinity International University in 2000 and professorship from Pan Africa Theological Seminary in 2005.</p>
-
-            <p>Married to First Lady Monica Chakwera since 1977, the President is a devoted family man with four children and twelve grandchildren. His leadership experience spans religious, academic, and civic spheres, including chairing the Evangelical Association of Malawi, National Council for Sports, and serving on several international boards.</p>
-
-            <h5 class="mt-4 mb-3 text-success">The SUPER HI-5 Governance Agenda</h5>
-            <p>President Chakwera's administration is built on five foundational principles known as the SUPER HI-5:</p>
-            
-            <div class="profile-highlights">
-              <ul>
-                <li><strong>Servant Leadership:</strong> Transforming government into a service-oriented institution focused on results rather than privileges.</li>
-                <li><strong>Uniting Malawi:</strong> Bridging political, tribal, and social divides through inclusive leadership and cultural celebration.</li>
-                <li><strong>Prospering Together:</strong> Ambitious economic plans including job creation, tax relief, agricultural reform, and women's empowerment.</li>
-                <li><strong>Ending Corruption:</strong> Strengthening anti-corruption institutions with specialized courts and departmental oversight.</li>
-                <li><strong>Rule of Law:</strong> Commitment to constitutional governance, judicial independence, and law enforcement support.</li>
-              </ul>
-            </div>
-
-            <p>These principles embody President Chakwera's vision of <em>"Building A New Malawi Enjoyed by All"</em> (<em>Kumanga Malawi Watsopano Okomela Tonse</em>), which inspired the name of his nine-party Tonse Alliance that won the historic 2020 election. His leadership continues to focus on restoring hope, accountability, and shared prosperity to the Warm Heart of Africa.</p>
-
+          </div>
+         
           </div>
 
         </div><!-- president-profile -->
