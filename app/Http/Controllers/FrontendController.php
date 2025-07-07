@@ -19,7 +19,28 @@ class FrontendController extends Controller
 
     public function profile()
     {
-        return view('frontend.profile');
+        $page = Page::where('slug', 'his-excellency-profile')->firstOrFail();
+
+        $contentBlocks = collect($page->content);
+
+        // Extract the first image block
+        $imageBlock = $contentBlocks->firstWhere('type', 'App\\Filament\\Blocks\\ImageBlock');
+        $imagePath = $imageBlock['data']['image'] ?? null;
+        $imageCaption = $imageBlock['data']['caption'] ?? null;
+
+        // Exclude image blocks from content
+        $filteredBlocks = $contentBlocks->reject(function ($block) {
+            return $block['type'] === 'App\\Filament\\Blocks\\ImageBlock';
+        })->values()->all(); // reset indexes
+
+        return view('frontend.profile', [
+            'page' => $page,
+            'profileImage' => $imagePath,
+            'profileCaption' => $imageCaption,
+            'filteredContent' => $filteredBlocks,
+        ]);
+        
+       
     }
 
 
