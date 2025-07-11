@@ -43,121 +43,38 @@
                 </div>
 
                 <div class="row video-gallery">
-                    <!-- Video 1 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <article class="video-item card h-100 border-0 shadow-sm">
-                            <div class="video-container rounded-top">
-                                <iframe src="https://www.youtube.com/embed/yV3oNuMqmm8" frameborder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                    title="President Chakwera speech marking 100 days in office"></iframe>
-                            </div>
-                            <div class="card-body bg-light rounded-bottom">
-                                <h3 class="video-title text-dark mb-1">
-                                    <i class="fas fa-microphone-alt text-danger mr-2" aria-hidden="true"></i>President Chakwera speech marking 100 days in office
-                                </h3>
-                                <p class="video-meta text-muted small mb-0">
-                                    <i class="far fa-calendar-alt mr-1" aria-hidden="true"></i> October 05, 2020
-                                    <span class="mx-2" aria-hidden="true">|</span>
-                                    <i class="far fa-clock mr-1" aria-hidden="true"></i> 12:45 mins
-                                </p>
-                            </div>
-                        </article>
-                    </div>
+                    @foreach ($videos as $video)
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <article class="video-item card h-100 border-0 shadow-sm">
+                                <div class="video-container rounded-top">
+                                    <iframe src="{{ $video->youtube_url }}" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen
+                                        title="{{ $video->title }}"></iframe>
+                                </div>
+                                <div class="card-body bg-light rounded-bottom">
+                                    <h3 class="video-title text-dark mb-1">
+                                        <i class=" mr-2" aria-hidden="true"></i>{{ $video->title }}
+                                    </h3>
+                                    <p class="video-meta text-muted small mb-0">
+                                        <i class="far fa-calendar-alt mr-1"></i> {{ \Carbon\Carbon::parse($video->created_at)->format('F d, Y') }}
+                                        <span class="mx-2">|</span>
 
-                    <!-- Video 2 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <article class="video-item card h-100 border-0 shadow-sm">
-                            <div class="video-container rounded-top">
-                                <iframe src="https://www.youtube.com/embed/KulX1shrOgw" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                    title="Malawi President Addresses United Nations General Debate"></iframe>
-                            </div>
-                            <div class="card-body bg-light rounded-bottom">
-                                <h3 class="video-title text-dark mb-1">
-                                    <i class="fas fa-hard-hat text-primary mr-2" aria-hidden="true"></i>Malawi - President Addresses United Nations General Debate, 78th Session | #UNGA
-                                </h3>
-                                <p class="video-meta text-muted small mb-0">
-                                    <i class="far fa-calendar-alt mr-1" aria-hidden="true"></i> December 5, 2022
-                                    <span class="mx-2" aria-hidden="true">|</span>
-                                    <i class="far fa-clock mr-1" aria-hidden="true"></i> 8:22 mins
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Video 3 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <article class="video-item card h-100 border-0 shadow-sm">
-                            <div class="video-container rounded-top">
-                                <iframe src="https://www.youtube.com/embed/oKb4DaUAKgk" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                    title="President's Address to Parliament"></iframe>
-                            </div>
-                            <div class="card-body bg-light rounded-bottom">
-                                <h3 class="video-title text-dark mb-1">
-                                    <i class="fas fa-graduation-cap text-info mr-2" aria-hidden="true"></i>President's Address to Parliament
-                                </h3>
-                                <p class="video-meta text-muted small mb-0">
-                                    <i class="far fa-calendar-alt mr-1" aria-hidden="true"></i> November 20, 2022
-                                    <span class="mx-2" aria-hidden="true">|</span>
-                                    <i class="far fa-clock mr-1" aria-hidden="true"></i> 15:30 mins
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Video 4 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <article class="video-item card h-100 border-0 shadow-sm">
-                            <div class="video-container rounded-top">
-                                <iframe src="https://www.youtube.com/embed/awYiolAg5tE" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen
-                                    title="Open Government Week 2024 Highlights"></iframe>
-                            </div>
-                            <div class="card-body bg-light rounded-bottom">
-                                <h3 class="video-title text-dark mb-1">
-                                    <i class="fas fa-heartbeat text-danger mr-2" aria-hidden="true"></i>Open Government Week 2024 Highlights 
-                                </h3>
-                                <p class="video-meta text-muted small mb-0">
-                                    <i class="far fa-calendar-alt mr-1" aria-hidden="true"></i> October 10, 2022
-                                    <span class="mx-2" aria-hidden="true">|</span>
-                                    <i class="far fa-clock mr-1" aria-hidden="true"></i> 9:45 mins
-                                </p>
-                            </div>
-                        </article>
-                    </div>
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    @endforeach
                 </div>
 
                 <!-- Pagination -->
                 <div class="row mt-4">
                     <div class="col-12">
-                        <nav aria-label="Video pagination">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active" aria-current="page">
-                                    <span class="page-link">1 <span class="sr-only">(current)</span></span>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        {{ $videos->links() }}
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -196,7 +113,7 @@
         text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         letter-spacing: 0.5px;
     }
-    
+
     /* Section Title */
     .section-title {
         font-size: 1.75rem;
@@ -222,7 +139,7 @@
         color: #e74c3c;
         font-size: 1.5rem;
     }
-    
+
     /* Video Gallery Styles */
     .video-item {
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -258,7 +175,7 @@
         display: flex;
         align-items: center;
     }
-    
+
     /* Pagination Styles */
     .pagination {
         margin-top: 2rem;
@@ -278,7 +195,7 @@
         color: #c0392b;
         background-color: #f8f9fa;
     }
-    
+
     /* Responsive Styles */
     @media (max-width: 992px) {
         .banner-title {

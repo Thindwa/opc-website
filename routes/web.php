@@ -25,7 +25,10 @@ Route::get('/ministers', [FrontendController::class,'ministers'])->name('ministe
 Route::get('/deputy', [FrontendController::class,'deputy'])->name('deputy');
 Route::get('/history', [FrontendController::class,'history'])->name('history');
 Route::get('/dodma', [FrontendController::class,'dodma'])->name('dodma');
-Route::get('/departments', [FrontendController::class,'departments'])->name('departments');
+
+Route::get('/departments', [FrontendController::class, 'departments'])->name('departments.index');
+Route::get('/departments/{slug}', [FrontendController::class, 'departmentShow'])->name('departments.show');
+
 Route::get('/singledepartment', [FrontendController::class,'singledepartment'])->name('singledepartment');
 Route::get('/human', [FrontendController::class,'human'])->name('human');
 Route::get('/civil', [FrontendController::class,'civil'])->name('civil');
@@ -45,5 +48,3 @@ Route::get('/documents', [FrontendController::class,'documents'])->name('documen
 Route::get('/photo', [FrontendController::class,'photo'])->name('photo');
 Route::get('/video', [FrontendController::class,'video'])->name('video');
 
-Route::get('/departments/{id}', [FrontendController::class, 'departmentShow'])->name('frontend.department.show');
-// Your existing department show route

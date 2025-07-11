@@ -5,11 +5,11 @@
         <!-- About Us Section -->
         <div class="col-lg-4 col-md-6 footer-widget footer-about mb-4 mb-md-0">
           <h3 class="widget-title text-white mb-4">About Us</h3>
-          <img loading="lazy" width="200" class="footer-logo mb-3" src="frontendassets/images/footer-logo.png" alt="OPC Logo">
+          <img loading="lazy" width="200" class="footer-logo mb-3" src="{{asset('frontendassets/images/logo.jpg')}}" alt="OPC Logo">
           <p class="text-light" style="text-align: justify; line-height: 1.6;">
             The Office of the President and Cabinet (OPC) is responsible for providing advice and support to the President and Cabinet as well as providing oversight leadership in the Public Service.
           </p>
-          
+
           <div class="footer-social mt-4">
             <ul class="list-inline">
               <li class="list-inline-item"><a href="https://facebook.com/opcmalawi" aria-label="Facebook" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a></li>
@@ -29,7 +29,7 @@
               Office of the President and Cabinet,<br>
               Capital Hill Circle, Private Bag 301,<br>
               Capital City, Lilongwe 3, Malawi.
-            </p>              
+            </p>
             <p class="mb-1"><i class="fas fa-phone-alt mr-2"></i> Telephone: <a href="tel:+2651789311" class="text-white">+265 178 9311</a> / <a href="tel:+2651789411" class="text-white">+265 178 9411</a></p>
             <p class="mb-1"><i class="fas fa-envelope mr-2"></i> Email: <a href="mailto:opc@opc.gov.mw" class="text-white">opc@opc.gov.mw</a></p>
             <p class="mb-0"><i class="fas fa-clock mr-2"></i> Monday - Friday: 07:00 - 16:30</p>

@@ -180,114 +180,11 @@
 </style>
 
 <section id="main-container" class="main-container">
-  <div class="container">
-    <h4 class="service-charter-title">Customer Service Charter for the Office of the President and Cabinet</h4>
-
-    <div class="table-responsive service-table">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>NO</th>
-            <th>SERVICES OFFERED</th>
-            <th>REQUIREMENTS NEEDED FROM YOU</th>
-            <th>COST IMPLICATIONS</th>
-            <th>TIME FRAME</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>General enquiries</td>
-            <td>None</td>
-            <td>Free</td>
-            <td>Minutes</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Change of name</td>
-            <td>
-              <ul class="list-unstyled">
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Filled form from the District Commissioner or Commissioner for Oath</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> A copy of advert in newspapers indicating your intention to change the name (14 days after the advert)</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> The application and the submission of the forms should be made in person, not through a third party</li>
-              </ul>
-            </td>
-            <td>Free</td>
-            <td>14 days</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Processing of applications on Use of the Protected Flags, Emblems and Name</td>
-            <td>
-              <ul class="list-unstyled">
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Certificate of Registration from the Registrar of Companies</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Detailed copy of the constitution or Articles of Association</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Names, addresses and nationalities of the Board of Directors</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Outline of the objectives of the organisation</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Plan of action/activities for the organisation</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Statement of anticipated benefits to the nation</li>
-              </ul>
-            </td>
-            <td>Free</td>
-            <td>14 days</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Handling of Public Grievances and complaints</td>
-            <td>
-              <ul class="list-unstyled">
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Letter from the line Ministry/District Commissioner</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Documented evidence of the matter being reported</li>
-                <li><i class="fas fa-check-circle text-success mr-2"></i> Witnesses to the reported matter</li>
-              </ul>
-            </td>
-            <td>Free</td>
-            <td>Variable</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Provision of Current Government Information to the Public</td>
-            <td>We provide it monthly but can be obtained on request</td>
-            <td>Free</td>
-            <td>Monthly</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="complaints-section">
-      <h5 class="complaints-title">COMPLAINTS</h5>
-      <div class="complaints-content">
-        <p>If you are not satisfied with our services, please contact us through the following channels:</p>
-
-        <div class="d-flex align-items-center mb-3">
-          <i class="fas fa-phone-alt text-success mr-3 fa-lg"></i>
-          <div>
-            <strong>Phone:</strong> 01789411
-          </div>
-        </div>
-
-        <div class="d-flex mb-3">
-          <i class="fas fa-envelope text-success mr-3 fa-lg mt-1"></i>
-          <div>
-            <strong>Email:</strong> <a href="mailto:opc@opc.gov.mw">opc@opc.gov.mw</a>
-          </div>
-        </div>
-
-        <div class="d-flex">
-          <i class="fas fa-map-marker-alt text-success mr-3 fa-lg mt-1"></i>
-          <div>
-            <strong>Postal Address:</strong><br>
-            The Chief Secretary to the Government,<br>
-            Complaint Desk,<br>
-            Office of the President and Cabinet,<br>
-            P/Bag 301,<br>
-            Lilongwe 3.
-          </div>
-        </div>
+    <div class="container">
+        @if(isset($page->content))
+            {!! \App\Helpers\RenderBlocksHelper::render($page->content) !!}
+        @endif
       </div>
-    </div>
-  </div>
 </section>
 
 @endsection

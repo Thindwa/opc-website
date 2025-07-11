@@ -1,55 +1,4 @@
 @extends('layouts.frontend')
-
-@section('content')
-<div class="container py-5 department-show">
-    <h1 class="mb-4">{{ $department->name }}</h1>
-
-    @if($department->image || $department->title)
-    <img src="{{ $department->image_url }}" alt="{{ $department->name }}" class="img-fluid rounded mb-4 department-image" style="max-height: 400px;">
-    @endif
-
-    @if($department->description)
-    <div class="mb-4">
-        <p class="lead">{{ $department->description }}</p>
-    </div>
-    @endif
-
-    @if($department->mandate)
-    <div class="mb-4 department-section">
-        <h3 class="section-title">Mandate</h3>
-        <div class="section-content">{{ $department->mandate }}</div>
-    </div>
-    @endif
-
-    @if($department->vision)
-    <div class="mb-4 department-section">
-        <h3 class="section-title">Vision</h3>
-        <div class="section-content">{{ $department->vision }}</div>
-    </div>
-    @endif
-
-    @if($department->mission)
-    <div class="mb-4 department-section">
-        <h3 class="section-title">Mission</h3>
-        <div class="section-content">{{ $department->mission }}</div>
-    </div>
-    @endif
-
-    @if($department->strategic_goals)
-    <div class="mb-4 department-section">
-        <h3 class="section-title">Strategic Goals</h3>
-        <div class="section-content">{!! nl2br(e($department->strategic_goals)) !!}</div>
-    </div>
-    @endif
-
-    <a href="{{ route('frontend.departments') }}" class="btn btn-primary mt-4 back-button">
-    ← Back to Departments
-</a>
-    </a>
-</div>
-@endsection
-
-@section('styles')
 <style>
     .department-show {
         max-width: 900px;
@@ -76,4 +25,46 @@
         transform: translateX(-5px);
     }
 </style>
+@section('content')
+
+<!-- Banner Section -->
+<div id="banner-area" class="banner-area" style="background-image: url('{{ $department->banner_image ? asset('storage/' . $department->banner_image) : asset('frontendassets/images/banner/banner1.jpg') }}')">
+    <div class="banner-text">
+        <div class="container text-center">
+            <div class="banner-heading">
+                <h1 class="banner-title" style="font-size: 1.5rem;">Departments</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('departments.index') }}">Departments</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $department->title }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section -->
+<section class="about-opc section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <!-- Section Title -->
+                <div class="section-header text-center mb-5">
+                    <h4 class="section-title" style="font-size: 1.5rem;">{{ $department->title }}</h4>
+                    <div class="title-divider">
+                        <span class="divider-line"></span>
+                    </div>
+                </div>
+
+                <!-- Render Blocks -->
+                {!! \App\Helpers\RenderBlocksHelper::render($department['content']) !!}
+            </div>
+        </div>
+    </div>
+</section>
 @endsection
+
+
+

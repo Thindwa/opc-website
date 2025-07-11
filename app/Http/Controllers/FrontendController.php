@@ -2,8 +2,10 @@
 namespace App\Http\Controllers;
 use App\Models\Page;
 
+use App\Models\Video;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Outerweb\ImageLibrary\Models\Image;
 
 class FrontendController extends Controller
 {
@@ -14,8 +16,13 @@ class FrontendController extends Controller
 
     public function about()
     {
-        return view('frontend.about');
+        $page = Page::where('slug', 'opc-hqs-sections-page')->firstOrFail();
+
+        return view('frontend.about', [
+            'tabs' => collect($page->content)->firstWhere('type', 'App\\Filament\\Blocks\\SectionTabsBlock')['data']['tabs'] ?? [],
+        ]);
     }
+
 
     public function profile()
     {
@@ -39,8 +46,8 @@ class FrontendController extends Controller
             'profileCaption' => $imageCaption,
             'filteredContent' => $filteredBlocks,
         ]);
-        
-       
+
+
     }
 
 
@@ -77,7 +84,9 @@ class FrontendController extends Controller
 
     public function charter()
     {
-        return view('frontend.charter');
+        $page = Page::where('slug', 'service-charter')->firstOrFail();
+
+    return view('frontend.charter', compact('page'));
     }
 
     public function ministers()
@@ -96,19 +105,23 @@ class FrontendController extends Controller
     }
 
     public function history()
-    {
-        return view('frontend.history');
-    }
+{
+    $page = Page::where('slug', 'history-page')->firstOrFail(); // or any identifier
+
+    return view('frontend.history', [
+        'page' => $page,
+    ]);
+}
 
     public function departments()
     {
-        $departments = Department::where('status', true)->get(); // Get only active departments
+        $departments = Department::all();
         return view('frontend.departments', compact('departments'));
     }
 
-    public function departmentShow($id)
+    public function departmentShow($slug)
 {
-    $department = Department::findOrFail($id);
+    $department = Department::where('slug', $slug)->firstOrFail();
     return view('frontend.department-show', compact('department'));
 }
 
@@ -189,12 +202,14 @@ class FrontendController extends Controller
 
     public function photo()
     {
-        return view('frontend.photo');
+        $images = Image::all();
+        return view('frontend.photo', compact('images'));
     }
 
     public function video()
     {
-        return view('frontend.video');
+        $videos = Video::latest()->paginate(6);
+        return view('frontend.video', compact('videos'));
     }
 
     public function contacts()

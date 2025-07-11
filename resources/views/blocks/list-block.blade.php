@@ -20,7 +20,7 @@
         @if (!empty(trim($item)))
             <li class="list-group-item">
                 @if($hasIcons)
-                    <i class="{{ $iconClass }}"></i>
+                    <i class="{{ $iconClass }} mx-3"></i>
                 @endif
                 <span>{{ $item }}</span>
             </li>
