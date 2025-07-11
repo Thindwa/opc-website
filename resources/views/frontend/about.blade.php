@@ -227,169 +227,49 @@
   }
 </style>
 
-<section id="main-container" class="main-container">
-  <div class="container">
-    <div class="row">
-      <!-- Left Sidebar Tabs -->
-      <div class="col-xl-3 col-lg-4">
-        <div class="sidebar sidebar-left">
-          <div class="widget">
-            <h3 class="widget-title">OPC Sections</h3>
-            <ul class="nav flex-column nav-pills service-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <li><a class="nav-link active" id="tab-opc-headquarters" data-toggle="pill" href="#content-opc-headquarters" role="tab" aria-controls="content-opc-headquarters" aria-selected="true">OPC Headquarters</a></li>
-              <li><a class="nav-link" id="tab-administration" data-toggle="pill" href="#content-administration" role="tab" aria-controls="content-administration" aria-selected="false">Administration</a></li>
-              <li><a class="nav-link" id="tab-procurement" data-toggle="pill" href="#content-procurement" role="tab" aria-controls="content-procurement" aria-selected="false">Procurement</a></li>
-              <li><a class="nav-link" id="tab-cabinet" data-toggle="pill" href="#content-cabinet" role="tab" aria-controls="content-cabinet" aria-selected="false">Cabinet</a></li>
-              <li><a class="nav-link" id="tab-finance" data-toggle="pill" href="#content-finance" role="tab" aria-controls="content-finance" aria-selected="false">Finance</a></li>
-              <li><a class="nav-link" id="tab-me" data-toggle="pill" href="#content-me" role="tab" aria-controls="content-me" aria-selected="false">Monitoring and Evaluation</a></li>
-              <li><a class="nav-link" id="tab-human-resource" data-toggle="pill" href="#content-human-resource" role="tab" aria-controls="content-human-resource" aria-selected="false">Human Resource</a></li>
-              <li><a class="nav-link" id="tab-legal-affairs" data-toggle="pill" href="#content-legal-affairs" role="tab" aria-controls="content-legal-affairs" aria-selected="false">Legal Affairs</a></li>
-              <li><a class="nav-link" id="tab-internal-audit" data-toggle="pill" href="#content-internal-audit" role="tab" aria-controls="content-internal-audit" aria-selected="false">Internal Audit</a></li>
-              <li><a class="nav-link" id="tab-ict" data-toggle="pill" href="#content-ict" role="tab" aria-controls="content-ict" aria-selected="false">Information and Communication Technology (ICT)</a></li>
-            </ul>
+<section id="main-container" class="main-container py-5">
+    <div class="container">
+      <div class="row">
+        <!-- Left Sidebar Tabs -->
+        <div class="col-xl-3 col-lg-4">
+          <div class="sidebar sidebar-left">
+            <div class="widget">
+              <h3 class="widget-title">OPC Sections</h3>
+              <ul class="nav flex-column nav-pills service-menu" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                @foreach($tabs as $index => $tab)
+                  <li>
+                    <a class="nav-link {{ $loop->first ? 'active' : '' }}"
+                       id="tab-{{ $tab['id'] }}"
+                       data-toggle="pill"
+                       href="#content-{{ $tab['id'] }}"
+                       role="tab"
+                       aria-controls="content-{{ $tab['id'] }}"
+                       aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                      {{ $tab['title'] }}
+                    </a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Right Content Area -->
-      <div class="col-xl-9 col-lg-8">
-        <div class="tab-content" id="v-pills-tabContent">
-          <!-- OPC Headquarters -->
-          <div class="tab-pane fade show active scroll-target" id="content-opc-headquarters" role="tabpanel" aria-labelledby="tab-opc-headquarters">
-            <h2 class="column-title mrt-0">OPC Headquarters</h2>
-            <p>The Office of President and Cabinet (OPC) comprises Department of Disaster Management Affairs, Printing Services, Statutory Corporations, Central Government Stores, Government Contracting Unit, Performance Reporting Department, Department of Human Resource Management and Development, Department of Public Events and Department of Innovations and Creativity.</p>
-            <p>OPC is guided by Malawi Nation's Policies, Legislation, vision, mission and Major Government priorities in the running of the country's Affairs.</p>
-            <img src="{{ asset('frontendassets/images/services/service1a.jpg') }}" class="img-fluid mb-4" alt="OPC Headquarters Building">
-          </div>
-
-          <!-- Administration -->
-          <div class="tab-pane fade scroll-target" id="content-administration" role="tabpanel" aria-labelledby="tab-administration">
-            <h2 class="column-title mrt-0">Administration</h2>
-            <p>Oversees the smooth running of operations, manages resources, and supports all departments within OPC.</p>
-            <img src="{{ asset('frontendassets/images/administration.jpg') }}" class="img-fluid mb-4" alt="Administration Department">
-          </div>
-
-            <!-- procurement -->
-            <div class="tab-pane fade scroll-target" id="content-procurement" role="tabpanel" aria-labelledby="tab-procurement">
-                <h2 class="column-title mrt-0">Procurement</h2>
-                <p>Responsible for the procurement of goods and services for the Government of Malawi.</p>
-                <img src="{{ asset('frontendassets/images/administration.jpg') }}" class="img-fluid mb-4" alt="Procurement Department">
-              </div>
-
-          <!-- Cabinet -->
-          <div class="tab-pane fade scroll-target" id="content-cabinet" role="tabpanel" aria-labelledby="tab-cabinet">
-            <h2 class="column-title mrt-0">Cabinet</h2>
-            <p>The OPC Cabinet provides leadership direction and high-level decision making on major governmental policies and programs.</p>
-            <img src="{{ asset('frontendassets/images/cabinet.jpg') }}" class="img-fluid mb-4" alt="Cabinet Meeting">
-          </div>
-
-          <!-- Finance -->
-          <div class="tab-pane fade scroll-target" id="content-finance" role="tabpanel" aria-labelledby="tab-finance">
-            <h2 class="column-title mrt-0">Finance</h2>
-            <p>Responsible for budget management, financial planning, and ensuring transparency in the allocation of OPC resources.</p>
-            <img src="{{ asset('frontendassets/images/finance.jpg') }}" class="img-fluid mb-4" alt="Finance Department">
-          </div>
-
-          <!-- Monitoring and Evaluation -->
-          <div class="tab-pane fade scroll-target" id="content-me" role="tabpanel" aria-labelledby="tab-me">
-            <h2 class="column-title mrt-0">Monitoring and Evaluation</h2>
-            <p>Tracks project progress, assesses program impacts, and ensures that initiatives meet desired outcomes and objectives.</p>
-            <img src="{{ asset('frontendassets/images/monitoring.jpg') }}" class="img-fluid mb-4" alt="Monitoring and Evaluation">
-          </div>
-
-          <!-- Human Resource -->
-          <div class="tab-pane fade scroll-target" id="content-human-resource" role="tabpanel" aria-labelledby="tab-human-resource">
-            <h2 class="column-title mrt-0">Human Resource</h2>
-            <p>Manages staff recruitment, welfare, performance, and capacity building, ensuring the OPC workforce remains highly motivated and effective.</p>
-            <img src="{{ asset('frontendassets/images/hr.jpg') }}" class="img-fluid mb-4" alt="Human Resource Department">
-          </div>
-
-          <!-- Legal Affairs -->
-          <div class="tab-pane fade scroll-target" id="content-legal-affairs" role="tabpanel" aria-labelledby="tab-legal-affairs">
-            <h2 class="column-title mrt-0">Legal Affairs</h2>
-            <p>Provides legal advice and representation, ensuring that all OPC operations are compliant with national laws and regulations.</p>
-            <img src="{{ asset('frontendassets/images/legal.jpg') }}" class="img-fluid mb-4" alt="Legal Affairs Department">
-          </div>
-
-          <!-- Internal Audit -->
-          <div class="tab-pane fade scroll-target" id="content-internal-audit" role="tabpanel" aria-labelledby="tab-internal-audit">
-            <h2 class="column-title mrt-0">Internal Audit</h2>
-            <p>Conducts independent evaluations of financial and operational activities to strengthen accountability and internal controls.</p>
-            <img src="{{ asset('frontendassets/images/audit.jpg') }}" class="img-fluid mb-4" alt="Internal Audit Department">
-          </div>
-
-          <!-- ICT -->
-          <div class="tab-pane fade scroll-target" id="content-ict" role="tabpanel" aria-labelledby="tab-ict">
-            <h2 class="column-title mrt-0">Information and Communication Technology (ICT)</h2>
-            <p>Leads the digital transformation of OPC through innovative IT solutions, infrastructure development, and cybersecurity management.</p>
-            <img src="{{ asset('frontendassets/images/ict.jpg') }}" class="img-fluid mb-4" alt="ICT Department">
+        <!-- Right Content Area -->
+        <div class="col-xl-9 col-lg-8">
+          <div class="tab-content" id="v-pills-tabContent">
+            @foreach($tabs as $index => $tab)
+            <div class="tab-pane fade scroll-target {{ $loop->first ? 'show active' : '' }}"
+                 id="content-{{ $tab['id'] }}"
+                 role="tabpanel"
+                 aria-labelledby="tab-{{ $tab['id'] }}">
+              <h2 class="column-title mrt-0">{{ $tab['title'] }}</h2>
+              {!! \App\Helpers\RenderBlocksHelper::render($tab['content']) !!}
+            </div>
+            @endforeach
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get all tab links
-    const tabLinks = document.querySelectorAll('.service-menu .nav-link');
-
-    // Add click event listener to each tab link
-    tabLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // Get the target tab pane ID
-            const targetId = this.getAttribute('href');
-            const targetPane = document.querySelector(targetId);
-
-            // Remove active class from all tab links and panes
-            document.querySelectorAll('.service-menu .nav-link').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                pane.classList.remove('show', 'active');
-            });
-
-            // Add active class to clicked tab link
-            this.classList.add('active');
-
-            // Show the target tab pane
-            targetPane.classList.add('show', 'active');
-
-            // Smooth scroll to the target pane
-            targetPane.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-
-            // For mobile view, close the menu if it's a collapsible menu
-            if (window.innerWidth < 992) {
-                const navbarCollapse = document.querySelector('.navbar-collapse');
-                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-                    navbarCollapse.classList.remove('show');
-                }
-            }
-        });
-    });
-
-    // Automatically scroll to the active tab content on page load
-    const activeTabLink = document.querySelector('.service-menu .nav-link.active');
-    if (activeTabLink) {
-        const targetId = activeTabLink.getAttribute('href');
-        const targetPane = document.querySelector(targetId);
-        if (targetPane) {
-            setTimeout(() => {
-                targetPane.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 300); // Small delay to allow page to settle
-        }
-    }
-});
-</script>
+  </section>
 
 @endsection

@@ -33,7 +33,7 @@
                 <div class="row align-items-center">
                     <div class="logo col-lg-3 text-center text-lg-left mb-1 mb-md-1 mb-lg-0">
                         <a class="d-block" href="index.html">
-                            <img loading="lazy" src="frontendassets/images/logo.jpg" alt="Emblame"
+                            <img loading="lazy" src="{{asset('frontendassets/images/logo.jpg')}}" alt="Emblame"
                                 style="height: 50px; width: auto;">
                         </a>
                     </div><!-- logo end -->
@@ -41,7 +41,7 @@
                         <ul class="top-info-box">
                             <li class="header-get-a-quote">
                                 <a href="#" style="display: inline-block; padding: 0;">
-                                    <img src="frontendassets/images/flags/flag.jpg" alt="Malawi Flag"
+                                    <img src="{{asset('frontendassets/images/flags/emblam1.jpg')}}" alt="Malawi Flag"
                                         style="height: 40px; width: auto; border: none; box-shadow: none;">
                                 </a>
                             </li>
@@ -83,9 +83,9 @@
                                     </ul>
                                 </li>
 
-                                {{-- <li class="nav-item"><a class="nav-link" href="{{route('departments')}}">Departments</a></li> --}}
+                                <li class="nav-item"><a class="nav-link" href="{{route('departments.index')}}">Departments</a></li>
 
-                                <li class="nav-item dropdown">
+                                {{-- <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
                                         id="departmentsDropdown" aria-haspopup="true" aria-expanded="false">
                                         Departments <i class="fa fa-angle-down ml-1"></i>
@@ -112,7 +112,7 @@
                                         <li><a class="dropdown-item" href="{{ route('innovations') }}">Innovations
                                                 and Creativity</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cabinet
                                         <i class="fa fa-angle-down"></i></a>
