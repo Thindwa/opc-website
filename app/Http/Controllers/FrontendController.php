@@ -3,7 +3,10 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 
 use App\Models\Video;
+use App\Models\Minister;
+use App\Models\Dminister;
 use App\Models\Department;
+use App\Models\Management;
 use Illuminate\Http\Request;
 use Outerweb\ImageLibrary\Models\Image;
 
@@ -14,6 +17,18 @@ class FrontendController extends Controller
         return view('frontend.home');
     }
 
+/*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Display the 'About' page with section tabs.
+     *
+     * This function retrieves the content from the 'opc-hqs-sections-page'
+     * and extracts the tabs from the 'SectionTabsBlock' block type to be
+     * displayed on the 'about' view.
+     *
+     * @return \Illuminate\View\View
+     */
+
+/*******  29d17a00-77a6-4142-b8cd-4162d09c2c98  *******/
     public function about()
     {
         $page = Page::where('slug', 'opc-hqs-sections-page')->firstOrFail();
@@ -77,10 +92,20 @@ class FrontendController extends Controller
 
 
 
+
     public function management()
-    {
-        return view('frontend.management');
-    }
+{
+    $management = Management::all();
+
+    $spc = $management->where('position_type', 'CS')->first();
+    $dspc = $management->where('position_type', 'DCS')->first();
+    $ps = $management->where('position_type', 'PS');
+    $directors = $management->where('position_type', 'Director');
+
+    return view('frontend.management', compact('spc', 'dspc', 'ps', 'directors'));
+}
+
+
 
     public function charter()
     {
@@ -91,12 +116,19 @@ class FrontendController extends Controller
 
     public function ministers()
     {
-        return view('frontend.ministers');
+        $ministers = Minister::all();
+
+        $president = $ministers->where('position_type', 'President')->first();
+        $vp = $ministers->where('position_type', 'VP')->first();
+        $cabinet = $ministers->where('position_type', 'Ministers')->all();
+
+        return view('frontend.ministers', compact('president', 'vp', 'cabinet'));
     }
 
-    public function deputy()
+        public function deputy()
     {
-        return view('frontend.deputy');
+        $dministers = Dminister::all();
+        return view('frontend.deputy', compact('dministers'));
     }
 
     public function cabinet()

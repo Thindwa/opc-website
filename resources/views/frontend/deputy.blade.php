@@ -149,84 +149,21 @@
     <!-- Title row end -->
 
     <!-- Deputy Ministers Section -->
-    <div class="row">
-      <!-- Deputy Minister of Local Government, Unity, and Culture Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team25.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Local Government, Unity, and Culture</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Joyce Chitsulo, MP</strong>
-          </p>
-        </div>
+    <!-- Deputy Ministers Section -->
+<div class="row">
+  @foreach($dministers as $minister)
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="minister-card text-center">
+        <img src="{{ asset('storage/' . $minister->image) }}" alt="{{ $minister->name }}" class="img-fluid rounded shadow mb-3 minister-image">
+        <h4 class="mt-3" style="font-weight: bold;">{{ $minister->position }}</h4>
+        <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
+          <strong>{{ $minister->name }}</strong>
+        </p>
       </div>
+    </div>
+  @endforeach
+</div>
 
-      <!-- Deputy Minister of Health Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team26.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Health</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Noah Chimpeni, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Deputy Minister of Transport and Public Works Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team27.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Transport and Public Works</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Baba Steven Malondera, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Deputy Minister of Agriculture Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team28.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Agriculture</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Benedicto Kaluwa-Adwell Chambo, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Deputy Minister of Foreign Affairs Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team29.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Foreign Affairs</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Benedicto Kaluwa-Adwell Chambo, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Deputy Minister of Gender Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team30.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Gender</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Halima Alima Daud, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Deputy Minister of Water and Sanitation Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team31.jpg" alt="Deputy Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Deputy Minister of Water and Sanitation</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Liana Chapota Munthali, MP</strong>
-          </p>
-        </div>
-      </div>
-    </div><!-- Deputy Ministers row end -->
   </div><!-- Container end -->
 </section><!-- Main container end -->
 
