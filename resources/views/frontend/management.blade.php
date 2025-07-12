@@ -209,155 +209,82 @@
     </div>
 
     <div class="conatiner">
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-6 col-md-8">
-              <div class="minister-card text-center">
-                <img src="{{asset('frontendassets/images/team/team32.jpg')}}" alt="President" class="img-fluid rounded shadow mb-3 minister-image">
-                <div class="ts-team-content-classic mt-3">
-                    <h3 class="ts-name">COLLEN ZAMBA</h3>
-                    <p class="ts-designation">Secretary to the President and Cabinet</p>
-                  </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Vice President Section -->
-          <div class="row justify-content-center mb-5">
-            <div class="col-lg-6 col-md-8">
-              <div class="minister-card text-center">
-                <img src="{{asset('frontendassets/images/team/dspc.jpg')}}" alt="Vice President" class="img-fluid rounded shadow mb-3 minister-image">
-                <div class="ts-team-content-classic mt-3">
-                    <h3 class="ts-name">DR. JANET BANDA SC</h3>
-                    <p class="ts-designation">Deputy Secretary to the President and Cabinet</p>
-                  </div>
-            </div>
-          </div>
+        @if($spc)
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-6 col-md-8">
+    <div class="minister-card text-center">
+      <img src="{{ asset('storage/' . $spc->image) }}" alt="{{ $spc->name }}" class="img-fluid rounded shadow mb-3 minister-image">
+      <div class="ts-team-content-classic mt-3">
+        <h3 class="ts-name">{{ strtoupper($spc->name) }}</h3>
+        <p class="ts-designation">{{ $spc->position }}</p>
+      </div>
     </div>
+  </div>
+</div>
+@endif
+
+          @if($dspc)
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-6 col-md-8">
+    <div class="minister-card text-center">
+      <img src="{{ asset('storage/' . $dspc->image) }}" alt="{{ $dspc->name }}" class="img-fluid rounded shadow mb-3 minister-image">
+      <div class="ts-team-content-classic mt-3">
+        <h3 class="ts-name">{{ strtoupper($dspc->name) }}</h3>
+        <p class="ts-designation">{{ $dspc->position }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 
     <!-- Principal Secretaries Row -->
-    <div class="row mb-4">
-      <div class="col-12">
-        <br>
-        <br>
-        <br>
-        <h4 class="text-center mb-4" style="color: #28a745; font-weight: 600;">Principal Secretaries</h4>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/psa.jpg') }}" class="img-fluid" alt="Principal Secretary">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">DR. M TSITSI</h3>
-            <p class="ts-designation">principal Secretary Administration</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/team35.jpg') }}" class="img-fluid" alt="Clerk to Cabinet">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">CLERK TO THE CABINET</h3>
-            <p class="ts-designation">Principal Secretary</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/team36.jpg') }}" class="img-fluid" alt="Godwin Kaonongera">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">GODWIN KAONONGERA</h3>
-            <p class="ts-designation">Principal Secretary Finance</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/team37.jpg') }}" class="img-fluid" alt="Anjimile Mtila">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">ANJIMILE MTILA</h3>
-            <p class="ts-designation">Monitoring & Evaluation</p>
-          </div>
-        </div>
-      </div>
+    @if($ps->count())
+  <div class="row mb-4">
+    <div class="col-12">
+      <br><br><br>
+      <h4 class="text-center mb-4" style="color: #28a745; font-weight: 600;">Principal Secretaries</h4>
     </div>
+
+    @foreach($ps as $person)
+      <div class="col-lg-3 col-md-6 mb-5">
+        <div class="ts-team-wrapper">
+          <div class="team-img-wrapper">
+            <img src="{{ asset('storage/' . $person->image) }}" class="img-fluid" alt="{{ $person->name }}">
+          </div>
+          <div class="ts-team-content-classic">
+            <h3 class="ts-name">{{ strtoupper($person->name) }}</h3>
+            <p class="ts-designation">{{ $person->position }}</p>
+          </div>
+        </div>
+      </div>
+    @endforeach
+  </div>
+@endif
+
 
     <!-- Directors Row -->
-    <div class="row">
-      <div class="col-12">
-        <h4 class="text-center mb-4" style="color: #28a745; font-weight: 600;">Directors</h4>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/team34.jpg') }}" class="img-fluid" alt="Dr. Maxwell S. Tsitsi">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">DR. MAXWELL S. TSITSI</h3>
-            <p class="ts-designation">Director for Administration</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/team35.jpg') }}" class="img-fluid" alt="Samison Ngutwa">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">SAMISON NGUTWA</h3>
-            <p class="ts-designation">Director of Cabinet</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/dp.jpg') }}" class="img-fluid" alt="George Chande">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">GEORGE CHANDE</h3>
-            <p class="ts-designation">Director of Policy</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/team36.jpg') }}" class="img-fluid" alt="Chizaso Nyirongo">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">CHIZASO NYIRONGO</h3>
-            <p class="ts-designation">Director of Legal Affairs</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6 mb-5">
-        <div class="ts-team-wrapper">
-          <div class="team-img-wrapper">
-            <img loading="lazy" src="{{ asset('frontendassets/images/team/dhrm.jpg') }}" class="img-fluid" alt="Shadreck Ching'oma">
-          </div>
-          <div class="ts-team-content-classic">
-            <h3 class="ts-name">SHADRECK CHING'OMA</h3>
-            <p class="ts-designation">Director of Human Resource</p>
-          </div>
-        </div>
-      </div>
+    @if($directors->count())
+  <div class="row">
+    <div class="col-12">
+      <h4 class="text-center mb-4" style="color: #28a745; font-weight: 600;">Directors</h4>
     </div>
+
+    @foreach($directors as $person)
+      <div class="col-lg-3 col-md-6 mb-5">
+        <div class="ts-team-wrapper">
+          <div class="team-img-wrapper">
+            <img src="{{ asset('storage/' . $person->image) }}" class="img-fluid" alt="{{ $person->name }}">
+          </div>
+          <div class="ts-team-content-classic">
+            <h3 class="ts-name">{{ strtoupper($person->name) }}</h3>
+            <p class="ts-designation">{{ $person->position }}</p>
+          </div>
+        </div>
+      </div>
+    @endforeach
+  </div>
+@endif
+
   </div>
 </section>
 

@@ -143,34 +143,39 @@
     </div>
     <!-- Title row end -->
 
-    <!-- His Excellency Section -->
-    <div class="row justify-content-center mb-5">
-      <div class="col-lg-6 col-md-8">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team1.jpg" alt="President" class="img-fluid rounded shadow mb-3 minister-image">
-          <h3 class="mt-3" style="font-weight: bold;">His Excellency</h3>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Dr. Lazarus McCarthy Chakwera.</strong><br>
-            President of the Republic of Malawi,<br>
-            Commander-in-Chief of the Malawi Defence Force.
-          </p>
-        </div>
-      </div>
+   
+  @if($president)
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-6 col-md-8">
+    <div class="minister-card text-center">
+      <img src="{{ asset('storage/' . $president->image) }}" alt="President" class="img-fluid rounded shadow mb-3 minister-image">
+      <h3 class="mt-3" style="font-weight: bold;">His Excellency</h3>
+      <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
+        <strong>{{ $president->name }}</strong><br>
+        {{ $president->position }}
+      </p>
     </div>
+  </div>
+</div>
+@endif
+
 
     <!-- Vice President Section -->
-    <div class="row justify-content-center mb-5">
-      <div class="col-lg-6 col-md-8">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team2.jpg" alt="Vice President" class="img-fluid rounded shadow mb-3 minister-image">
-          <h3 class="mt-3" style="font-weight: bold;">Vice President</h3>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Right Honourable Dr. Michael Bizwick Usi.</strong><br>
-            Minister of State for Public Service Delivery<br>
-          </p>
-        </div>
-      </div>
+  @if($vp)
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-6 col-md-8">
+    <div class="minister-card text-center">
+      <img src="{{ asset('storage/' . $vp->image) }}" alt="Vice President" class="img-fluid rounded shadow mb-3 minister-image">
+      <h3 class="mt-3" style="font-weight: bold;">Vice President</h3>
+      <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
+        <strong>{{ $vp->name }}</strong><br>
+        {{ $vp->position }}
+      </p>
     </div>
+  </div>
+</div>
+@endif
+
 
     <!-- Cabinet Ministers Section -->
     <div class="row text-center mb-5">
@@ -179,249 +184,20 @@
       </div>
     </div>
 
-    <div class="row">
-      <!-- Finance Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team3.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Finance and Economic Affairs</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Simplex Chithyola, MP</strong>
-          </p>
-        </div>
+   <div class="row">
+  @foreach ($cabinet as $minister)
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="minister-card text-center">
+        <img src="{{ asset('storage/' . $minister->image) }}" alt="{{ $minister->name }}" class="img-fluid rounded shadow mb-3 minister-image">
+        <h4 class="mt-3" style="font-weight: bold;">{{ $minister->position }}</h4>
+        <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
+          <strong>{{ $minister->name }}</strong>
+        </p>
       </div>
+    </div>
+  @endforeach
+</div>
 
-      <!-- Trade Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team4.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Trade and Industry</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Eng. Vitumbiko Augeans Zasamula Mumba.</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Agriculture Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team5.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Agriculture</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Samuel Kawale, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Homeland Security Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team6.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Homeland Security</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Ezekiel Peter Ching'oma, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Foreign Affairs Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team7.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Foreign Affairs</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Khumbize Kandodo Chiponda, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Health Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team8.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Health</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Khumbize Kandodo Chiponda, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Local Government Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team9.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Local Government, Unity, and Culture</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Richard Chimwendo Banda, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Higher Education Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team10.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Higher Education</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Dr. Jessie Kabwila</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Justice Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team11.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Justice</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Titus Mvalo</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Gender Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team12.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Gender</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Jean Muonaowauza Sendeza MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Defence Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team13.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Defence</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Monica Chang'anamuno, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Tourism Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team14.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Tourism</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Vera Kamtukule</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Water and Sanitation Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team15.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Water and Sanitation</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Abida Sidik Mia, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Natural Resources and Climate Change Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team16.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Natural Resources and Climate Change</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Dr. Owen Chomanika, M.P</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Energy Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team17.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Energy</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Ibrahim Matola</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Information and Digitalization Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team18.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Information and Digitalization</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Moses Kunkuyu Kalongashawa</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Transport and Public Works Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team19.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Transport and Public Works</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Jacob Hara, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Basic and Secondary Education Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team20.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Basic and Secondary Education</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Madalitso Kambauwa Wirima, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Lands Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team21.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Lands</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Deus Gumba, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Mining Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team22.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Mining</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Dr. Kenneth Zikhale Ng'oma, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Youth and Sports Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team23.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Youth and Sports</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Uchizi Mkandawire, MP</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- Minister of Labour Section -->
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="minister-card text-center">
-          <img src="frontendassets/images/team/team24.jpg" alt="Minister" class="img-fluid rounded shadow mb-3 minister-image">
-          <h4 class="mt-3" style="font-weight: bold;">Minister of Labour</h4>
-          <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
-            <strong>Hon. Peter Dimba, MP</strong>
-          </p>
-        </div>
-      </div>
-    </div><!-- Ministers row end -->
   </div><!-- Container end -->
 </section><!-- Main container end -->
 
