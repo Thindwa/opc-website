@@ -9,9 +9,6 @@ class Document extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'category_type',
-        'title',
-        'file',
-    ];
+    protected $fillable = ['category_type', 'files'];
+    protected $casts = ['files' => 'array'];
 }

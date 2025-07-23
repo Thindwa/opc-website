@@ -1,34 +1,57 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Page;
+use App\Models\News;
 
+use App\Models\Page;
+use App\Models\Event;
 use App\Models\Video;
+use App\Models\Document;
 use App\Models\Minister;
 use App\Models\Dminister;
 use App\Models\Department;
 use App\Models\Management;
 use Illuminate\Http\Request;
 use Outerweb\ImageLibrary\Models\Image;
+use Illuminate\Support\Collection;
 
 class FrontendController extends Controller
 {
     public function home()
     {
-        return view('frontend.home');
+        $page = Page::where('slug', 'home')->firstOrFail();
+        $blocks = collect($page->content);
+
+        $imageIndex = $blocks->search(fn ($blk) => ($blk['type'] ?? null) === \App\Filament\Blocks\ImageTextBlock::class);
+        $accordionIndex = $blocks->search(fn ($blk) => ($blk['type'] ?? null) === \App\Filament\Blocks\HomeAccordionBlock::class);
+
+        if ($imageIndex !== false && $accordionIndex !== false) {
+            $imageBlock = $blocks->get($imageIndex);
+            $accordionBlock = $blocks->get($accordionIndex);
+
+            // Merge accordion items into the image block
+            $imageBlock['data']['accordion_items'] = $accordionBlock['data']['items'] ?? [];
+
+            // Replace updated image block
+            $blocks = $blocks->map(function ($block, $index) use ($imageIndex, $imageBlock, $accordionIndex) {
+                if ($index === $imageIndex) {
+                    return $imageBlock;
+                }
+                return $block;
+            });
+
+            // Remove the standalone accordion block
+            $blocks = $blocks->forget($accordionIndex)->values();
+        }
+
+        return view('frontend.home', [
+            'page' => $page,
+            'blocks' => $blocks->all(),
+        ]);
     }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Display the 'About' page with section tabs.
-     *
-     * This function retrieves the content from the 'opc-hqs-sections-page'
-     * and extracts the tabs from the 'SectionTabsBlock' block type to be
-     * displayed on the 'about' view.
-     *
-     * @return \Illuminate\View\View
-     */
 
-/*******  29d17a00-77a6-4142-b8cd-4162d09c2c98  *******/
+
+
     public function about()
     {
         $page = Page::where('slug', 'opc-hqs-sections-page')->firstOrFail();
@@ -131,10 +154,6 @@ class FrontendController extends Controller
         return view('frontend.deputy', compact('dministers'));
     }
 
-    public function cabinet()
-    {
-        return view('frontend.cabinet');
-    }
 
     public function history()
 {
@@ -157,80 +176,51 @@ class FrontendController extends Controller
     return view('frontend.department-show', compact('department'));
 }
 
-    public function singledepartment()
-    {
-        return view('frontend.singledepartment');
-    }
 
-    public function dodma()
-    {
-        return view('frontend.dodma');
-    }
-
-    public function human()
-    {
-        return view('frontend.human');
-    }
-
-    public function statutory()
-    {
-        return view('frontend.statutory');
-    }
-
-    public function printing()
-    {
-        return view('frontend.printing');
-    }
-
-    public function cgstores()
-    {
-        return view('frontend.cgstores');
-    }
-
-    public function contracting()
-    {
-        return view('frontend.contracting');
-    }
-
-    public function performance()
-    {
-        return view('frontend.performance');
-    }
-
-    public function events()
-    {
-        return view('frontend.events');
-    }
-
-    public function innovations()
-    {
-        return view('frontend.innovations');
-    }
-
-    public function services()
-    {
-        return view('frontend.services');
-    }
 
     public function news()
     {
-        return view('frontend.news');
+        $newsItems = News::latest()->paginate(6);
+        return view('frontend.news', compact('newsItems'));
     }
 
-    public function singlenews()
+    public function singlenews($slug)
     {
-        return view('frontend.singlenews');
+        $news = News::where('slug', $slug)->firstOrFail();
+        $recentPosts = News::latest()->take(5)->get();
+
+        return view('frontend.singlenews', compact('news', 'recentPosts'));
     }
+
 
     public function upcoming()
     {
-        return view('frontend.upcoming');
+        $events = Event::orderBy('start_date')->get();
+
+        $formattedEvents = $events->map(function ($e) {
+            return [
+                'title' => $e->title,
+                'start_date' => $e->start_date->toDateString(),
+                'end_date' => $e->end_date ? $e->end_date->toDateString() : null,
+                'location' => $e->location,
+                'description' => $e->description,
+                'image' => $e->image ? asset('storage/' . $e->image) : null,
+                'type' => 'Event',
+            ];
+        });
+
+        return view('frontend.upcoming', [
+            'events' => $formattedEvents,
+        ]);
     }
 
     public function documents()
     {
-        return view('frontend.documents');
+        $documents = Document::all()->groupBy('category_type');
+        return view('frontend.documents', compact('documents'));
     }
+
+
 
     public function photo()
     {

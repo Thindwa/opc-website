@@ -63,6 +63,12 @@ class PageResource extends Resource
                     \App\Filament\Blocks\CardBlock::block($form),
                     \App\Filament\Blocks\CodeBlock::block($form),
                     \App\Filament\Blocks\MapBlock::block($form),
+                    \App\Filament\Blocks\SliderBlock::block($form),
+                    \App\Filament\Blocks\ImageTextBlock::block($form),
+                    \App\Filament\Blocks\HomeAccordionBlock::block($form),
+                    \App\Filament\Blocks\ServiceGridBlock::block($form),
+                    \App\Filament\Blocks\VisionBlock::block($form),
+
 
                 ])
                 ->columnSpanFull(),

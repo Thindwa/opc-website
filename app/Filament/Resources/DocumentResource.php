@@ -33,26 +33,47 @@ class DocumentResource extends Resource
                     'Regulations' => 'Regulations',
                     'Reports' => 'Reports',
                     'Acts and Laws' => 'Acts and Laws',
+                    'Policies' => 'Policies',
+                    'Guidelines' => 'Guidelines',
+                    'Circulars' => 'Circulars',
+                    'Notices' => 'Notices',
+                    'Forms' => 'Forms',
+                    'Publications' => 'Publications',
+                    'Brochures' => 'Brochures',
+                    'Manuals' => 'Manuals',
+                    'Templates' => 'Templates',
+                    'FAQs' => 'FAQs',
+                    'Announcements' => 'Announcements',
+                    'Newsletters' => 'Newsletters',
+                    'Press Releases' => 'Press Releases',
+                    'Media Kits' => 'Media Kits',
+                    'Reports and Publications' => 'Reports and Publications',
+                    'Research Papers' => 'Research Papers',
+                    'White Papers' => 'White Papers',
+                    'Case Studies' => 'Case Studies',
+                    'Guidelines and Standards' => 'Guidelines and Standards',
+                    'Guidelines' => 'Guidelines',
                     'Miscellaneous' => 'Miscellaneous',
                     'Tenders' => 'Tenders',
                     'Vacancies' => 'Vacancies',
                     'Advertisements' => 'Advertisements',
+                    'Announcements' => 'Announcements',
                     'Others' => 'Others',
+
                 ])
                 ->searchable(),
 
-            Forms\Components\TextInput::make('title')
-                ->label('Document Title')
+                Forms\Components\FileUpload::make('files')
+                ->label('Upload Documents')
                 ->required()
-                ->maxLength(255),
+                ->multiple()
+                ->directory('documents')
+                ->visibility('public')
+                ->downloadable()
+                ->preserveFilenames()
+                ->reorderable()
+                ->columnSpanFull(),
 
-            Forms\Components\FileUpload::make('file')
-                ->label('Upload Document')
-                ->required()
-                ->directory('documents') // Folder where files will be saved
-                ->visibility('public')   // Make accessible via storage link
-                ->downloadable()         // Adds download button
-                ->preserveFilenames(),
         ]);
 }
 
@@ -61,10 +82,7 @@ class DocumentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category_type'),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('file')
-                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

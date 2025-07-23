@@ -1,9 +1,11 @@
 @extends('layouts.frontend')
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 @section('content')
 
 <!-- Banner Area -->
-<div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
+{{-- <div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
     <div class="banner-text">
         <div class="container">
             <div class="row">
@@ -22,13 +24,17 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-<!-- Documents Section -->
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <section class="about-opc section-padding">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
+                <!-- Section Header -->
                 <div class="section-header text-center mb-5">
                     <h4 class="section-title">DOCUMENT LIBRARY</h4>
                     <div class="title-divider">
@@ -37,7 +43,7 @@
                         <span class="divider-line"></span>
                     </div>
                     <p class="content-text text-center">
-                        Access our collection of publicly available documents including Speeches, policies, strategies, reports, and guidelines.
+                        Access our collection of publicly available documents including speeches, plans, reports and more.
                     </p>
                 </div>
 
@@ -47,213 +53,80 @@
                             <!-- Tab Navigation -->
                             <div class="col-12">
                                 <ul class="nav nav-tabs" id="documentsTab" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="speeches-tab" data-bs-toggle="tab" data-bs-target="#speeches-tab-pane" type="button" role="tab" aria-controls="speeches-tab-pane" aria-selected="true">
-                                            <i class="fas fa-gavel mr-2"></i>Speeches
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="strategies-tab" data-bs-toggle="tab" data-bs-target="#strategies-tab-pane" type="button" role="tab" aria-controls="strategies-tab-pane" aria-selected="false">
-                                            <i class="fas fa-chess mr-2"></i>Strategic Plans
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="press-tab" data-bs-toggle="tab" data-bs-target="#press-tab-pane" type="button" role="tab" aria-controls="press-tab-pane" aria-selected="false">
-                                            <i class="fas fa-bullhorn mr-2"></i>Press Releases
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="regulations-tab" data-bs-toggle="tab" data-bs-target="#regulations-tab-pane" type="button" role="tab" aria-controls="regulations-tab-pane" aria-selected="false">
-                                            <i class="fas fa-balance-scale mr-2"></i>Regulations
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports-tab-pane" type="button" role="tab" aria-controls="reports-tab-pane" aria-selected="false">
-                                            <i class="fas fa-chart-bar mr-2"></i>Reports
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="acts-tab" data-bs-toggle="tab" data-bs-target="#acts-tab-pane" type="button" role="tab" aria-controls="acts-tab-pane" aria-selected="false">
-                                            <i class="fas fa-chart-bar mr-2"></i>Acts and Laws
-                                        </button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="misc-tab" data-bs-toggle="tab" data-bs-target="#misc-tab-pane" type="button" role="tab" aria-controls="misc-tab-pane" aria-selected="false">
-                                            <i class="fas fa-ellipsis-h mr-2"></i>Miscellaneous
-                                        </button>
-                                    </li>
+                                    @foreach ($documents as $category => $items)
+                                        @php
+                                            $tabId = Str::slug($category);
+                                        @endphp
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link @if ($loop->first) active @endif"
+                                                id="{{ $tabId }}-tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#{{ $tabId }}"
+                                                type="button"
+                                                role="tab"
+                                                aria-controls="{{ $tabId }}"
+                                                aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                                            >
+                                                {{ $category }}
+                                            </button>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
 
                             <!-- Tab Content -->
                             <div class="col-12">
                                 <div class="tab-content p-4" id="documentsTabContent">
-                                    <!-- Speeches Tab -->
-                                    <div class="tab-pane fade show active" id="speeches-tab-pane" role="tabpanel" aria-labelledby="speeches-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">The launch of the OGP National Action Plan for Malawi.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Policies/Climate%20Change%20Management%20Policy%20Final.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Policies/Climate%20Change%20Management%20Policy%20Final.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                        
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">His Excellency SADC welcome remarks.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Policies/Climate%20Change%20Management%20Policy%20Final.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Policies/Climate%20Change%20Management%20Policy%20Final.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                    </div>
+                                    @foreach ($documents as $category => $docs)
+                                        @php
+                                            $tabId = Str::slug($category);
+                                        @endphp
+                                        <div
+                                            class="tab-pane fade @if ($loop->first) show active @endif"
+                                            id="{{ $tabId }}"
+                                            role="tabpanel"
+                                            aria-labelledby="{{ $tabId }}-tab"
+                                        >
+                                            @foreach ($docs as $doc)
+                                                @foreach ($doc->files ?? [] as $file)
+                                                    @php
+                                                        $fileName = ucwords(str_replace(['-', '_'], ' ', pathinfo($file, PATHINFO_FILENAME)));
+                                                        $fileUrl = asset('storage/' . $file);
+                                                        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                                                        $iconMap = [
+                                                            'pdf' => 'fas fa-file-pdf',
+                                                            'doc' => 'fas fa-file-word',
+                                                            'docx' => 'fas fa-file-word',
+                                                            'ppt' => 'fas fa-file-powerpoint',
+                                                            'pptx' => 'fas fa-file-powerpoint',
+                                                        ];
+                                                        $iconClass = $iconMap[$ext] ?? 'fas fa-file';
+                                                    @endphp
 
-                                    <!-- Strategies Tab -->
-                                    <div class="tab-pane fade" id="strategies-tab-pane" role="tabpanel" aria-labelledby="strategies-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">National Refugee Management Strategy.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Strategies/updated-malawis-strategy-on-climate-change-learning-2021.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Strategies/updated-malawis-strategy-on-climate-change-learning-2021.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
+                                                    <div class="document-item">
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <div class="document-info">
+                                                                <i class="{{ $iconClass }} document-icon"></i>
+                                                                <span class="document-name">{{ $fileName }}</span>
+                                                            </div>
+                                                            <div class="document-actions">
+                                                                <a class="btn btn-view" href="{{ $fileUrl }}" target="_blank">
+                                                                    <i class="fas fa-eye mr-1"></i> View
+                                                                </a>
+                                                                <a class="btn btn-download" href="{{ $fileUrl }}" download>
+                                                                    <i class="fas fa-download mr-1"></i> Download
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <hr class="document-divider">
+                                                    </div>
+                                                @endforeach
+                                            @endforeach
                                         </div>
-                                    </div>
-
-                                    <!-- Press Releases Tab -->
-                                    <div class="tab-pane fade" id="press-tab-pane" role="tabpanel" aria-labelledby="press-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">Press releases announcing new funding received.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Guides/GHG%20Inventory%20Guide.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Guides/GHG%20Inventory%20Guide.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                    </div>
-
-                                    <!-- Regulations Tab -->
-                                    <div class="tab-pane fade" id="regulations-tab-pane" role="tabpanel" aria-labelledby="regulations-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">Refugee Protection Regulations.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Regulations/Environmental%20Protection%20Regulations.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Regulations/Environmental%20Protection%20Regulations.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                    </div>
-
-                                    <!-- Reports Tab -->
-                                    <div class="tab-pane fade" id="reports-tab-pane" role="tabpanel" aria-labelledby="reports-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">Human Rights Reports.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Reports/GHG%20Emissions%20Report%202023.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Reports/GHG%20Emissions%20Report%202023.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                    </div>
-
-                                    <!-- Acts Tab -->
-                                    <div class="tab-pane fade" id="acts-tab-pane" role="tabpanel" aria-labelledby="acts-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">Refugee Act 2023.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Acts/Refugee%20Act%202023.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Acts/Refugee%20Act%202023.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                    </div>
-
-                                    <!-- Miscellaneous Tab -->
-                                    <div class="tab-pane fade" id="misc-tab-pane" role="tabpanel" aria-labelledby="misc-tab">
-                                        <div class="document-item">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="document-info">
-                                                    <i class="fas fa-file-pdf document-icon"></i>
-                                                    <span class="document-name">Biodiversity Inventory 2022.pdf</span>
-                                                </div>
-                                                <div class="document-actions">
-                                                    <a class="btn btn-view" href="../storage/app/media/Resources/Miscellaneous/Biodiversity%20Inventory%202022.pdf" target="_blank">
-                                                        <i class="fas fa-eye mr-1"></i> View
-                                                    </a>
-                                                    <a class="btn btn-download" href="../storage/app/media/Resources/Miscellaneous/Biodiversity%20Inventory%202022.pdf" download>
-                                                        <i class="fas fa-download mr-1"></i> Download
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <hr class="document-divider">
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            </div>
+                            </div> <!-- /col-12 -->
                         </div>
                     </div>
                 </div>
@@ -262,20 +135,8 @@
     </div>
 </section>
 
-<!-- Initialize Bootstrap tabs -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Bootstrap tabs
-        var tabElms = document.querySelectorAll('button[data-bs-toggle="tab"]');
-        tabElms.forEach(function(tabEl) {
-            tabEl.addEventListener('click', function(event) {
-                event.preventDefault();
-                var tab = new bootstrap.Tab(tabEl);
-                tab.show();
-            });
-        });
-    });
-</script>
+
+
 
 <style>
     /* Your existing CSS styles remain unchanged */
@@ -309,7 +170,7 @@
         margin-bottom: 1rem;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
-    
+
     /* Section Title */
     .section-title {
         font-size: 1.5rem;
@@ -334,7 +195,7 @@
         color: #e74c3c;
         font-size: 1.2rem;
     }
-    
+
     /* Document Library Specific Styles */
     .document-item {
         margin-bottom: 1rem;
@@ -402,7 +263,7 @@
         color: #e74c3c;
         background-color: rgba(231, 76, 60, 0.1);
     }
-    
+
     /* Responsive Styles */
     @media (max-width: 768px) {
         .banner-area {
@@ -435,3 +296,35 @@
 </style>
 
 @endsection
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash;
+
+        if (hash) {
+            const targetTabButton = document.querySelector(`button[data-bs-target="${hash}"]`);
+            const targetTabPane = document.querySelector(hash);
+
+            if (targetTabButton && targetTabPane) {
+                // Remove 'active show' from all tab panes
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('active', 'show');
+                });
+
+                // Remove 'active' from all tab buttons
+                document.querySelectorAll('.nav-link').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+
+                // Activate the tab
+                const tab = new bootstrap.Tab(targetTabButton);
+                tab.show();
+
+                // Add required classes manually to tab-pane (fixes rare race condition)
+                targetTabPane.classList.add('active', 'show');
+            }
+        }
+    });
+</script>

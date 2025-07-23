@@ -20,42 +20,29 @@ class EventResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
-{
-    return $form
-        ->schema([
+    {
+        return $form->schema([
             Forms\Components\TextInput::make('title')
-                ->label('Event Title')
                 ->required()
-                ->maxLength(255),
-
-            Forms\Components\DatePicker::make('start_date')
-                ->label('Start Date')
-                ->required(),
-
-            Forms\Components\DatePicker::make('end_date')
-                ->label('End Date')
-                ->required(),
-
-            Forms\Components\TextInput::make('location')
-                ->label('Location')
-                ->required()
-                ->maxLength(255),
-
-            Forms\Components\Textarea::make('description')
-                ->label('Event Description')
-                ->rows(5)
-                ->required()
+                ->maxLength(255)
                 ->columnSpanFull(),
 
+            Forms\Components\Hidden::make('slug'),
+
+            Forms\Components\DatePicker::make('start_date')->required(),
+            Forms\Components\DatePicker::make('end_date')->required(),
+
+            Forms\Components\TextInput::make('location')->required(),
+
             Forms\Components\FileUpload::make('image')
-                ->label('Event Image')
-                ->image()
-                ->directory('event-images') // optional storage path
-                ->visibility('public')       // for public access
-                ->imagePreviewHeight('150')
-                ->nullable(),                // ✅ make optional
+                ->image(),
+
+            Forms\Components\RichEditor::make('description')
+                ->columnSpanFull()
+                ->required(),
         ]);
-}
+    }
+
 
     public static function table(Table $table): Table
     {

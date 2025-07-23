@@ -20,35 +20,33 @@ class NewsResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
-{
-    return $form
-        ->schema([
-            Forms\Components\TextInput::make('title')
-                ->label('News Title')
-                ->required()
-                ->maxLength(255),
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
 
-            Forms\Components\Textarea::make('description')
-                ->label('Description')
-                ->required()
-                ->rows(5)
-                ->columnSpanFull(),
+                Forms\Components\Hidden::make('slug'),
 
-            Forms\Components\FileUpload::make('image')
-                ->label('Featured Image')
-                ->image()
-                ->directory('news-images') // ✅ Store in a specific folder
-                ->visibility('public')      // ✅ Publicly accessible if needed
-                ->imagePreviewHeight('150')
-                ->nullable(),               // ✅ Makes it optional
-        ]);
-}
+                Forms\Components\FileUpload::make('image')
+                    ->image(),
+
+                Forms\Components\RichEditor::make('description')
+                    ->required()
+                    ->columnSpanFull(),
+            ]);
+    }
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
@@ -64,7 +62,6 @@ class NewsResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -86,7 +83,6 @@ class NewsResource extends Resource
         return [
             'index' => Pages\ListNews::route('/'),
             'create' => Pages\CreateNews::route('/create'),
-            'view' => Pages\ViewNews::route('/{record}'),
             'edit' => Pages\EditNews::route('/{record}/edit'),
         ];
     }

@@ -269,7 +269,7 @@
 </style>
 @section('content')
     <!-- Enhanced Banner Section -->
-    <div id="banner-area" class="banner-area"
+    {{-- <div id="banner-area" class="banner-area"
         style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
         <div class="banner-text">
             <div class="container">
@@ -289,7 +289,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Gallery Section with Enhanced Styling -->
     <section id="main-container" class="main-container section-padding">

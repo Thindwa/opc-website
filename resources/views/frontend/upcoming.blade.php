@@ -1,9 +1,171 @@
 @extends('layouts.frontend')
+<style>
+    :root {
+        --accent-color: #dc3545;
+        --secondary-color: #0d6efd;
+        --event-range-color: #ffc107;
+        --event-start-color: #198754;
+        --event-end-color: #6f42c1;
+    }
+
+    /* Sidebar */
+    .sidebar-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .month-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .month-list li {
+        margin-bottom: 0.5rem;
+    }
+
+    .month-list a {
+        color: #333;
+        text-decoration: none;
+        padding: 5px 10px;
+        display: block;
+        border-radius: 4px;
+    }
+
+    .month-list a.active,
+    .month-list a:hover {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+
+    /* Calendar Table */
+    .calendar-container {
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .calendar td {
+        width: 14.28%;
+        height: 80px;
+        vertical-align: top;
+        padding: 5px;
+        position: relative;
+    }
+
+    .day-container {
+        position: relative;
+        height: 100%;
+    }
+
+    .day-number {
+        font-size: 1rem;
+        font-weight: bold;
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 50%;
+        z-index: 2;
+    }
+
+    .current-day {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+
+    .event-day {
+        background-color: var(--secondary-color);
+        color: #fff;
+    }
+
+    .event-range {
+        position: absolute;
+        bottom: 0;
+        left: 2px;
+        right: 2px;
+        height: 6px;
+        background-color: var(--event-range-color);
+        border-radius: 3px;
+    }
+
+    .event-start {
+        background-color: var(--event-start-color) !important;
+    }
+
+    .event-end {
+        background-color: var(--event-end-color) !important;
+    }
+
+    .event-single-day {
+        background-color: var(--secondary-color) !important;
+    }
+
+    .event-continued {
+        opacity: 0.8;
+    }
+
+    /* Event Cards */
+    .event-card {
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .event-badge {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Upcoming Sidebar */
+    .upcoming-event-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .upcoming-event-date {
+        background-color: var(--secondary-color);
+        color: #fff;
+        text-align: center;
+        padding: 8px;
+        border-radius: 6px;
+        margin-right: 10px;
+        width: 50px;
+    }
+
+    .upcoming-event-day {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .upcoming-event-month {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .legend-color {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+</style>
 
 @section('content')
 
 <!-- Banner Section -->
-<div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
+{{-- <div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
     <div class="banner-text">
         <div class="container">
             <div class="row">
@@ -22,865 +184,430 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Events Calendar</title>
-    <style>
-        /* Banner */
-        .banner-area {
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 250px;
-            position: relative;
-        }
-        .banner-area::before {
-            content: '';
-            background: rgba(0,0,0,0.6);
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-        .banner-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-align: center;
-        }
 
-        /* Titles */
-        .banner-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+<div class="container-fluid py-4 mx-lg-0 mx-md-0">
+    <div class="row">
+        <!-- Sidebar Column - Browse by Month -->
+        <div class="col-lg-3">
+            <div class="sidebar">
+                <h4 class="sidebar-title">Browse by month</h4>
+                <ul class="month-list" id="month-list">
+                    @foreach ([
+                        'January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'
+                    ] as $i => $month)
+                        <li><a href="#" data-month="{{ $i }}">{{ $month }}</a></li>
+                    @endforeach
+                </ul>
 
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e74c3c;
-            --accent-color: #2ecc71;
-            --light-accent: #e8f8f0;
-            --text-color: #2c3e50;
-            --light-bg: #f8f9fa;
-            --border-radius: 10px;
-            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fa;
-            color: var(--text-color);
-        }
-
-        /* Main Content Styling */
-        .main-content {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            background-color: white;
-            padding: 25px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            margin-bottom: 30px;
-            height: 100%;
-        }
-
-        .sidebar-title {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-bottom: 2px solid #f1f1f1;
-            padding-bottom: 10px;
-            position: relative;
-        }
-
-        .sidebar-title:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-
-        .month-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .month-list li {
-            margin-bottom: 8px;
-        }
-
-        .month-list a {
-            color: var(--primary-color);
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .month-list a:before {
-            content: '';
-            position: absolute;
-            left: -100%;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--light-accent);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .month-list a:hover,
-        .month-list a.active {
-            color: var(--accent-color);
-            transform: translateX(5px);
-        }
-
-        .month-list a:hover:before,
-        .month-list a.active:before {
-            left: 0;
-        }
-
-        /* Current Month Events Header */
-        .events-header {
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            position: relative;
-        }
-
-        .events-header:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -1px;
-            width: 100px;
-            height: 2px;
-            background-color: var(--accent-color);
-        }
-
-        .events-header h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .events-header h2 i {
-            color: var(--accent-color);
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
-        /* Month Navigation */
-        .month-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background-color: white;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .month-navigation h4 {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin: 0;
-            font-size: 1.1rem;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .month-navigation .btn {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-
-        /* Calendar Styling */
-        .calendar-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 25px;
-            box-shadow: var(--box-shadow);
-        }
-
-        .calendar {
-            width: 100%;
-        }
-
-        .calendar th {
-            text-align: center;
-            color: var(--primary-color);
-            font-weight: 600;
-            padding: 12px 5px;
-            font-size: 0.85rem;
-        }
-
-        .calendar td {
-            text-align: center;
-            padding: 10px 5px;
-            position: relative;
-            height: 40px;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .calendar td:hover {
-            background-color: var(--light-accent);
-        }
-
-        .event-day {
-            background-color: var(--secondary-color);
-            color: white;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .event-day:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
-        }
-
-        .current-day {
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.3);
-        }
-
-        /* Event Cards */
-        .event-card {
-            margin-bottom: 30px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: none;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--box-shadow);
-            background-color: white;
-        }
-
-        .event-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .event-badge {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .card-text {
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        /* Upcoming Events Section */
-        .upcoming-events {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
-        }
-
-        .upcoming-event-item {
-            display: flex;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f1f1f1;
-        }
-
-        .upcoming-event-date {
-            min-width: 70px;
-            text-align: center;
-            margin-right: 15px;
-            background-color: var(--light-accent);
-            border-radius: 6px;
-            padding: 10px;
-        }
-
-        .upcoming-event-day {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            line-height: 1;
-        }
-
-        .upcoming-event-month {
-            font-size: 0.8rem;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .upcoming-event-details {
-            flex-grow: 1;
-        }
-
-        .upcoming-event-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .upcoming-event-time {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        /* No Events Styling */
-        .no-events {
-            padding: 40px;
-            background: white;
-            border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--box-shadow);
-        }
-
-        .no-events i {
-            font-size: 3rem;
-            color: #e0e0e0;
-            margin-bottom: 15px;
-        }
-
-        .no-events h4 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 992px) {
-            .calendar th,
-            .calendar td {
-                padding: 8px 3px;
-                font-size: 0.8rem;
-            }
-
-            .card-title {
-                font-size: 1.1rem;
-            }
-
-            .events-header h2 {
-                font-size: 1.2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                margin-bottom: 30px;
-            }
-
-            .event-card .col-md-5 {
-                height: 200px;
-            }
-
-            .events-header h2 {
-                font-size: 1.1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid py-4">
-        <div class="row">
-            <!-- Sidebar Column - Browse by Month -->
-            <div class="col-lg-3">
-                <div class="sidebar">
-                    <h4 class="sidebar-title">Browse by month</h4>
-                    <ul class="month-list" id="month-list">
-                        <li><a href="#" data-month="0">January</a></li>
-                        <li><a href="#" data-month="1">February</a></li>
-                        <li><a href="#" data-month="2">March</a></li>
-                        <li><a href="#" data-month="3">April</a></li>
-                        <li><a href="#" data-month="4">May</a></li>
-                        <li><a href="#" data-month="5">June</a></li>
-                        <li><a href="#" data-month="6">July</a></li>
-                        <li><a href="#" data-month="7">August</a></li>
-                        <li><a href="#" data-month="8">September</a></li>
-                        <li><a href="#" data-month="9">October</a></li>
-                        <li><a href="#" data-month="10">November</a></li>
-                        <li><a href="#" data-month="11">December</a></li>
-                    </ul>
-
-                    <!-- Upcoming Events Sidebar -->
-                    <div class="upcoming-events">
-                        <h4 class="sidebar-title">Upcoming Events</h4>
-                        <div id="upcoming-events-list">
-                            <!-- Will be populated by JavaScript -->
-                        </div>
+                <!-- Upcoming Events Sidebar -->
+                <div class="upcoming-events mt-5">
+                    <h4 class="sidebar-title">Upcoming Events</h4>
+                    <div id="upcoming-events-list">
+                        <!-- Will be populated by JS -->
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Main Content Column -->
-            <div class="col-lg-9">
-                <div class="main-content">
-                    <section class="mb-5">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <!-- Current Month Events Header -->
-                                <div class="events-header">
-                                    <h2 id="current-month-year">
-                                        <i class="far fa-calendar-alt"></i>Current month events
-                                    </h2>
-                                </div>
-
-                                <!-- Event Cards Container -->
-                                <div class="col-lg-12" id="events-container">
-                                    <div class="no-events">
-                                        <i class="far fa-calendar-times"></i>
-                                        <h4>No events scheduled</h4>
-                                        <p class="text-muted">There are no events scheduled for this month.</p>
-                                    </div>
-                                </div>
+        <!-- Main Content Column -->
+        <div class="col-lg-9">
+            <div class="main-content">
+                <section class="mb-5">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- Current Month Events Header -->
+                            <div class="events-header">
+                                <h2 id="current-month-year">
+                                    <i class="far fa-calendar-alt"></i> Events this Month
+                                </h2>
                             </div>
 
-                            <!-- Dynamic Calendar -->
-                            <div class="col-lg-4">
-                                <!-- Current Month Navigation -->
-                                <div class="month-navigation">
-                                    <button id="prev-month" class="btn btn-outline-danger">&lt; Prev</button>
-                                    <h4 id="display-month-year" class="mb-0">
-                                        Current month
-                                    </h4>
-                                    <button id="next-month" class="btn btn-outline-danger">Next &gt;</button>
-                                </div>
+                            <!-- Event Cards -->
+                            <div class="col-lg-12" id="events-container">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
 
-                                <div class="calendar-container">
-                                    <table class="table table-borderless calendar">
-                                        <thead>
-                                            <tr>
-                                                <th>Sun</th>
-                                                <th>Mon</th>
-                                                <th>Tue</th>
-                                                <th>Wed</th>
-                                                <th>Thu</th>
-                                                <th>Fri</th>
-                                                <th>Sat</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="calendar-body">
-                                            <!-- Calendar will be generated by JavaScript -->
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <!-- Calendar & Navigation -->
+                        <div class="col-lg-4">
+                            <div class="month-navigation mb-3">
+                                <button id="prev-month" class="btn btn-outline-danger">&lt; Prev</button>
+                                <h4 id="display-month-year" class="mb-0">Current month</h4>
+                                <button id="next-month" class="btn btn-outline-danger">Next &gt;</button>
+                            </div>
 
-                                <div class="calendar-legend mt-3">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="current-day me-2">1</span>
-                                        <small>Today</small>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="event-day me-2">1</span>
-                                        <small>Event day</small>
-                                    </div>
+                            <div class="calendar-container">
+                                <table class="table calendar table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Sun</th><th>Mon</th><th>Tue</th>
+                                            <th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="calendar-body">
+                                        <!-- Filled by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="calendar-legend mt-3">
+                                <h5 class="mb-3">Legend</h5>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: var(--accent-color);"></div>
+                                    <small>Today</small>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: var(--secondary-color);"></div>
+                                    <small>Event day</small>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: var(--event-range-color);"></div>
+                                    <small>Event range</small>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: var(--event-start-color);"></div>
+                                    <small>Event start</small>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background-color: var(--event-end-color);"></div>
+                                    <small>Event end</small>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sample events data for demonstration
-            const eventsByMonth = {
-                0: [ // January
-                    {
-                        title: "New Year's National Address",
-                        start_date: "2025-01-01",
-                        end_date: null,
-                        location: "National Assembly",
-                        description: "President's New Year address to the nation",
-                        image: null,
-                        type: "Official event"
-                    },
-                    {
-                        title: "Chilembwe Day",
-                        start_date: "2025-01-15",
-                        end_date: null,
-                        location: "Chiradzuru",
-                        description: "Commemoration day for Chilembwe Day",
-                        image: null,
-                        type: "Government meeting"
-                    }
-                ],
-                1: [ // February
-                    {
-                        title: "National Unity Day",
-                        start_date: "2025-02-10",
-                        end_date: "2025-02-12",
-                        location: "Various locations",
-                        description: "Celebrations promoting national unity",
-                        image: null,
-                        type: "Public holiday"
-                    }
-                ],
-                14: [ // May
-                    {
-                        title: "Kamuzu Day",
-                        start_date: "2025-05-14",
-                        end_date: "2025-05-14",
-                        location: "Kamuzu Mausoleum",
-                        description: "Commemoration of the late President Dr. Kamuzu Banda",
-                        image: null,
-                        type: "Official event"
-                    },
-                    {
-                        title: "International Workers' Day",
-                        start_date: "2025-05-01",
-                        end_date: null,
-                        location: "Nationwide",
-                        description: "Celebration of workers' rights and achievements",
-                        image: null,
-                        type: "Public holiday"
-                    }
-                ],
-                6: [ // July
-                    {
-                        title: "Independence Day",
-                        start_date: "2025-07-06",
-                        end_date: null,
-                        location: "Kamuzu Stadium",
-                        description: "Celebration of Malawi's independence",
-                        image: null,
-                        type: "National celebration"
-                    }
-                ],
-                // Add current month events
-                [new Date().getMonth()]: [
-                    {
-                        title: "OPC Website Presentation",
-                        start_date: new Date().toISOString().split('T')[0],
-                        end_date: null,
-                        location: "Government Building",
-                        description: "This is a sample event for the current month",
-                        image: null,
-                        type: "Demo event"
-                    }
-                ]
-            };
+{{-- Inject Laravel Events into JavaScript --}}
+<script>
+    const eventsFromLaravel = @json($events);
+</script>
 
-            // Set initial month to current month
-            let currentMonth = new Date().getMonth();
-            let currentYear = new Date().getFullYear();
-            const today = new Date();
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
 
-            // Initialize calendar
-            generateCalendar(currentMonth, currentYear);
-            loadEventsForMonth(currentMonth);
-            updateActiveMonthLink();
-            updateMonthYearDisplay();
-            loadUpcomingEvents();
+    // Process events and organize by month
+    const eventsByMonth = {};
+    const allEvents = [];
 
-            // Navigation event listeners
-            document.getElementById('prev-month').addEventListener('click', function() {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                updateCalendar();
-            });
+    eventsFromLaravel.forEach(event => {
+        const start = new Date(event.start_date);
+        const end = event.end_date ? new Date(event.end_date) : start;
 
-            document.getElementById('next-month').addEventListener('click', function() {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                updateCalendar();
-            });
+        // Make sure end date is not before start date
+        if (end < start) {
+            event.end_date = event.start_date;
+        }
 
-            // Month list event listeners
-            document.querySelectorAll('#month-list a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    currentMonth = parseInt(this.getAttribute('data-month'));
-                    updateCalendar();
-                });
-            });
+        // Add to all events array
+        allEvents.push({
+            ...event,
+            startDate: start,
+            endDate: end
+        });
 
-            function updateCalendar() {
-                generateCalendar(currentMonth, currentYear);
-                loadEventsForMonth(currentMonth);
-                updateActiveMonthLink();
-                updateMonthYearDisplay();
-            }
+        // Add to month index (for both start and end months if different)
+        const startMonth = start.getMonth();
+        const endMonth = end.getMonth();
 
-            function generateCalendar(month, year) {
-                const firstDay = new Date(year, month, 1).getDay();
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
+        if (!eventsByMonth[startMonth]) eventsByMonth[startMonth] = [];
+        eventsByMonth[startMonth].push(event);
 
-                const calendarBody = document.getElementById('calendar-body');
-                calendarBody.innerHTML = '';
+        if (endMonth !== startMonth) {
+            if (!eventsByMonth[endMonth]) eventsByMonth[endMonth] = [];
+            eventsByMonth[endMonth].push(event);
+        }
+    });
 
-                let date = 1;
-                for (let i = 0; i < 6; i++) {
-                    if (date > daysInMonth) break;
+    updateCalendar();
+    loadUpcomingEvents();
 
-                    const row = document.createElement('tr');
+    // Navigation event listeners
+    document.getElementById('prev-month').addEventListener('click', () => {
+        if (currentMonth === 0) {
+            currentMonth = 11;
+            currentYear--;
+        } else {
+            currentMonth--;
+        }
+        updateCalendar();
+    });
 
-                    for (let j = 0; j < 7; j++) {
-                        const cell = document.createElement('td');
+    document.getElementById('next-month').addEventListener('click', () => {
+        if (currentMonth === 11) {
+            currentMonth = 0;
+            currentYear++;
+        } else {
+            currentMonth++;
+        }
+        updateCalendar();
+    });
 
-                        if (i === 0 && j < firstDay) {
-                            cell.textContent = '';
-                        } else if (date > daysInMonth) {
-                            cell.textContent = '';
-                        } else {
-                            const daySpan = document.createElement('span');
-                            daySpan.textContent = date;
+    // Month list click handlers
+    document.querySelectorAll('#month-list a').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            currentMonth = parseInt(link.dataset.month);
+            updateCalendar();
+        });
+    });
 
-                            // Highlight today (only if viewing current month and year)
-                            if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
-                                daySpan.className = 'current-day';
-                            }
+    function updateCalendar() {
+        generateCalendar(currentMonth, currentYear);
+        loadEventsForMonth(currentMonth, currentYear);
+        updateMonthYearDisplay();
+        highlightActiveMonth();
+    }
 
-                            // Highlight event days
-                            const hasEvent = checkForEvent(month, date);
-                            if (hasEvent) {
-                                daySpan.className = 'event-day';
-                                cell.title = hasEvent;
-                            }
+    function loadEventsForMonth(month, year) {
+        const eventsContainer = document.getElementById('events-container');
 
-                            cell.appendChild(daySpan);
-                            date++;
-                        }
+        // Filter events for this month/year
+        const monthEvents = allEvents.filter(event => {
+            const eventStart = event.startDate;
+            const eventEnd = event.endDate;
 
-                        row.appendChild(cell);
-                    }
+            // Check if event overlaps with the current month
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
 
-                    calendarBody.appendChild(row);
-                }
-            }
+            return (eventStart <= lastDayOfMonth && eventEnd >= firstDayOfMonth);
+        });
 
-            function loadEventsForMonth(month) {
-                const eventsContainer = document.getElementById('events-container');
-                const monthEvents = eventsByMonth[month] || [];
+        if (monthEvents.length === 0) {
+            eventsContainer.innerHTML = `
+                <div class="no-events text-center my-5">
+                    <i class="far fa-calendar-times fa-2x text-muted"></i>
+                    <h4>No events scheduled</h4>
+                    <p class="text-muted">There are no events scheduled for ${getMonthName(month)} ${year}.</p>
+                </div>
+            `;
+            return;
+        }
 
-                if (monthEvents.length > 0) {
-                    let eventsHTML = '<div class="row">';
+        let eventsHTML = '<div class="row">';
+        monthEvents.forEach(event => {
+            const displayDate = event.startDate.getTime() === event.endDate.getTime()
+                ? `${formatDate(event.startDate)}`
+                : `${formatDate(event.startDate)} - ${formatDate(event.endDate)}`;
 
-                    monthEvents.forEach(event => {
-                        const startDate = new Date(event.start_date);
-                        const endDate = event.end_date ? new Date(event.end_date) : startDate;
+            eventsHTML += `
+                <div class="col-md-12 mb-4">
+                    <div class="card event-card">
+                        <div class="row g-0">
+                            <div class="col-md-5">
+                                <img src="${event.image || 'https://via.placeholder.com/400x300'}"
+                                     alt="${event.title}"
+                                     class="img-fluid w-100 h-100"
+                                     style="object-fit: cover;">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body p-4">
+                                    <span class="event-badge">${event.type}</span>
+                                    <h3 class="card-title">${event.title}</h3>
+                                    <p><strong class="text-danger"><i class="far fa-calendar mr-1"></i>Date:</strong> ${displayDate}</p>
+                                    <p><strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Venue:</strong> ${event.location}</p>
+                                    <p class="card-text">${event.description}</p>
 
-                        let dateDisplay = startDate.getDate() + getOrdinalSuffix(startDate.getDate());
-                        if (event.end_date && endDate > startDate) {
-                            dateDisplay += ' - ' + endDate.getDate() + getOrdinalSuffix(endDate.getDate()) + ' ' + getMonthName(endDate.getMonth());
-                        } else {
-                            dateDisplay += ' ' + getMonthName(startDate.getMonth());
-                        }
-
-                        eventsHTML += `
-                            <div class="col-md-12 mb-4">
-                                <div class="card event-card">
-                                    <div class="row g-0">
-                                        <div class="col-md-5">
-                                            <img src="${event.image || 'https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&h=500&q=80'}"
-                                                 class="img-fluid w-100 h-100"
-                                                 style="object-fit: cover;"
-                                                 alt="${event.title}">
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="card-body p-4">
-                                                <span class="event-badge">${event.type || 'Event'}</span>
-                                                <h3 class="card-title">${event.title}</h3>
-                                                <p class="card-text">
-                                                    <strong class="text-danger"><i class="far fa-calendar mr-1"></i>Date:</strong>
-                                                    ${dateDisplay}
-                                                </p>
-                                                <p class="card-text">
-                                                    <strong class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i>Venue:</strong> ${event.location}
-                                                </p>
-                                                <p class="card-text">${event.description}</p>
-                                                <a href="#" class="btn btn-sm btn-outline-danger">More details</a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        `;
-                    });
-
-                    eventsHTML += '</div>';
-                    eventsContainer.innerHTML = eventsHTML;
-                } else {
-                    eventsContainer.innerHTML = `
-                        <div class="no-events">
-                            <i class="far fa-calendar-times"></i>
-                            <h4>No events scheduled</h4>
-                            <p class="text-muted">There are no events scheduled for ${getMonthName(currentMonth)} ${currentYear}.</p>
                         </div>
-                    `;
+                    </div>
+                </div>
+            `;
+        });
+        eventsHTML += '</div>';
+        eventsContainer.innerHTML = eventsHTML;
+    }
+
+    function loadUpcomingEvents() {
+        const list = document.getElementById('upcoming-events-list');
+        const todayStr = today.toISOString().split('T')[0];
+
+        const upcoming = allEvents
+            .filter(e => e.startDate >= today && e.endDate >= today)
+            .sort((a, b) => a.startDate - b.startDate)
+            .slice(0, 5);
+
+        if (upcoming.length === 0) {
+            list.innerHTML = '<p class="text-muted">No upcoming events</p>';
+            return;
+        }
+
+        let html = '';
+        upcoming.forEach(event => {
+            const start = event.startDate;
+            const end = event.endDate;
+
+            const displayDate = start.getTime() === end.getTime()
+                ? formatDate(start, true)
+                : `${formatDate(start, true)} - ${formatDate(end, true)}`;
+
+            html += `
+                <div class="upcoming-event-item">
+                    <div class="upcoming-event-date">
+                        <div class="upcoming-event-day">${start.getDate()}</div>
+                        <div class="upcoming-event-month">${getMonthName(start.getMonth()).substring(0, 3)}</div>
+                    </div>
+                    <div class="upcoming-event-details">
+                        <div class="upcoming-event-title">${event.title}</div>
+                        <div class="upcoming-event-time">
+                            <i class="far fa-clock"></i> ${displayDate}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        list.innerHTML = html;
+    }
+
+    function generateCalendar(month, year) {
+    const tbody = document.getElementById('calendar-body');
+    tbody.innerHTML = '';
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    let date = 1;
+
+    const monthEvents = allEvents.filter(event => {
+        const eventStart = new Date(event.startDate);
+        const eventEnd = new Date(event.endDate);
+
+        eventStart.setHours(0, 0, 0, 0);
+        eventEnd.setHours(0, 0, 0, 0);
+
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+        firstDayOfMonth.setHours(0, 0, 0, 0);
+        lastDayOfMonth.setHours(0, 0, 0, 0);
+
+        return (eventStart <= lastDayOfMonth && eventEnd >= firstDayOfMonth);
+    });
+
+    for (let i = 0; i < 6; i++) {
+        const row = document.createElement('tr');
+
+        for (let j = 0; j < 7; j++) {
+            const cell = document.createElement('td');
+            const dayContainer = document.createElement('div');
+            dayContainer.className = 'day-container';
+
+            if (i === 0 && j < firstDay) {
+                cell.appendChild(dayContainer);
+            } else if (date > totalDays) {
+                cell.appendChild(dayContainer);
+            } else {
+                const dayNumber = document.createElement('span');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = date;
+
+                const currentDate = new Date(year, month, date);
+                currentDate.setHours(0, 0, 0, 0);
+
+                const isToday = currentDate.getTime() === (new Date(today.getFullYear(), today.getMonth(), today.getDate())).getTime();
+                if (isToday) {
+                    dayNumber.classList.add('current-day');
                 }
-            }
 
-            function loadUpcomingEvents() {
-                const upcomingEventsList = document.getElementById('upcoming-events-list');
-                let allEvents = [];
+                const dayEvents = monthEvents.filter(event => {
+                    const eventStart = new Date(event.startDate);
+                    const eventEnd = new Date(event.endDate);
+                    eventStart.setHours(0, 0, 0, 0);
+                    eventEnd.setHours(0, 0, 0, 0);
 
-                // Collect all events from all months
-                for (const month in eventsByMonth) {
-                    if (eventsByMonth.hasOwnProperty(month)) {
-                        eventsByMonth[month].forEach(event => {
-                            allEvents.push({
-                                ...event,
-                                month: parseInt(month)
-                            });
-                        });
-                    }
-                }
+                    return currentDate >= eventStart && currentDate <= eventEnd;
+                });
 
-                // Sort events by date
-                allEvents.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+                if (dayEvents.length > 0) {
+                    dayNumber.classList.add('event-day');
 
-                // Filter upcoming events (today or future)
-                const todayStr = today.toISOString().split('T')[0];
-                const upcomingEvents = allEvents.filter(event =>
-                    event.start_date >= todayStr
-                ).slice(0, 1); // Show next 5 events
+                    dayEvents.forEach(event => {
+                        const eventStart = new Date(event.startDate);
+                        const eventEnd = new Date(event.endDate);
+                        eventStart.setHours(0, 0, 0, 0);
+                        eventEnd.setHours(0, 0, 0, 0);
 
-                if (upcomingEvents.length > 0) {
-                    let upcomingHTML = '';
+                        const isStart = currentDate.getTime() === eventStart.getTime();
+                        const isEnd = currentDate.getTime() === eventEnd.getTime();
+                        const isSingleDay = eventStart.getTime() === eventEnd.getTime();
 
-                    upcomingEvents.forEach(event => {
-                        const startDate = new Date(event.start_date);
-                        const endDate = event.end_date ? new Date(event.end_date) : startDate;
+                        const marker = document.createElement('div');
+                        marker.className = 'event-range';
 
-                        upcomingHTML += `
-                            <div class="upcoming-event-item">
-                                <div class="upcoming-event-date">
-                                    <div class="upcoming-event-day">${startDate.getDate()}</div>
-                                    <div class="upcoming-event-month">${getMonthName(startDate.getMonth()).substring(0, 3)}</div>
-                                </div>
-                                <div class="upcoming-event-details">
-                                    <div class="upcoming-event-title">${event.title}</div>
-                                    <div class="upcoming-event-time">
-                                        <i class="far fa-clock mr-1"></i>
-                                        ${formatTime(startDate)}
-                                        ${event.end_date ? ' - ' + formatTime(endDate) : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                        if (isSingleDay) {
+                            marker.classList.add('event-single-day');
+                        } else {
+                            if (isStart) {
+                                marker.classList.add('event-start');
+                            } else if (isEnd) {
+                                marker.classList.add('event-end');
+                            } else {
+                                marker.classList.add('event-continued');
+                            }
+                        }
+
+                        dayContainer.appendChild(marker);
                     });
-
-                    upcomingEventsList.innerHTML = upcomingHTML;
-                } else {
-                    upcomingEventsList.innerHTML = `
-                        <div class="text-muted">No upcoming events scheduled</div>
-                    `;
                 }
+
+                dayContainer.appendChild(dayNumber);
+                cell.appendChild(dayContainer);
+                date++;
             }
 
-            function formatTime(date) {
-                return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            }
+            row.appendChild(cell);
+        }
 
-            function checkForEvent(month, day) {
-                const monthEvents = eventsByMonth[month] || [];
-                let eventTitles = [];
+        tbody.appendChild(row);
+        if (date > totalDays) break;
+    }
+}
 
-                monthEvents.forEach(event => {
-                    const startDate = new Date(event.start_date);
-                    const endDate = event.end_date ? new Date(event.end_date) : startDate;
 
-                    if (day >= startDate.getDate() && day <= endDate.getDate()) {
-                        eventTitles.push(event.title);
-                    }
-                });
+    function updateMonthYearDisplay() {
+        document.getElementById('display-month-year').textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+        document.getElementById('current-month-year').innerHTML = `<i class="far fa-calendar-alt"></i> ${getMonthName(currentMonth)} ${currentYear} events`;
+    }
 
-                return eventTitles.length > 0 ? eventTitles.join('\n') : false;
-            }
-
-            function updateActiveMonthLink() {
-                document.querySelectorAll('#month-list a').forEach(link => {
-                    link.classList.remove('active');
-                    if (parseInt(link.getAttribute('data-month')) === currentMonth) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            function updateMonthYearDisplay() {
-                const monthYear = `${getMonthName(currentMonth)} ${currentYear}`;
-                document.getElementById('display-month-year').textContent = monthYear;
-                document.getElementById('current-month-year').innerHTML = `
-                    <i class="far fa-calendar-alt"></i>${monthYear} events
-                `;
-            }
-
-            function getMonthName(monthIndex) {
-                const months = ["January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"
-                ];
-                return months[monthIndex];
-            }
-
-            function getOrdinalSuffix(day) {
-                if (day > 3 && day < 21) return 'th';
-                switch (day % 10) {
-                    case 1: return 'st';
-                    case 2: return 'nd';
-                    case 3: return 'rd';
-                    default: return 'th';
-                }
+    function highlightActiveMonth() {
+        document.querySelectorAll('#month-list a').forEach(a => {
+            a.classList.remove('active');
+            if (parseInt(a.dataset.month) === currentMonth) {
+                a.classList.add('active');
             }
         });
-    </script>
-</body>
+    }
+
+    function formatDate(date, includeTime = false) {
+        const options = {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        };
+
+        if (includeTime) {
+            options.hour = '2-digit';
+            options.minute = '2-digit';
+            return date.toLocaleDateString(undefined, options);
+        }
+
+        return date.toLocaleDateString(undefined, options);
+    }
+
+    function getMonthName(index) {
+        return ["January","February","March","April","May","June",
+                "July","August","September","October","November","December"][index];
+    }
+});
+</script>
 @endsection
+

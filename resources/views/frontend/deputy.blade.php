@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="banner-area" class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
+{{-- <div id="banner-area" class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
     <div class="banner-text">
       <div class="container">
           <div class="row">
@@ -21,7 +21,7 @@
           </div><!-- Row end -->
       </div><!-- Container end -->
     </div><!-- Banner text end -->
-  </div><!-- Banner area end --> 
+  </div><!-- Banner area end -->  --}}
 
 <style>
 
@@ -134,7 +134,7 @@
         <div class="logo my-3">
           <img src="frontendassets/images/flags/emblam1.jpg" class="img-fluid" id="flags" alt="Government of Malawi Logo" style="width:120px; height:auto;">
         </div>
-        
+
         <!-- Title -->
         <h6 class="section-main-title" style="font-size: 10px;">Government of Malawi</h6>
         <h2 class="section-title">Deputy Ministers</h2>

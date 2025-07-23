@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Banner Section -->
-<div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
+{{-- <div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
     <div class="banner-text">
         <div class="container">
             <div class="row">
@@ -22,118 +22,73 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Main Content Section -->
 <section id="main-container" class="main-container section-padding">
     <div class="container">
         <div class="row">
+            <!-- Main Content -->
             <div class="col-lg-8 mb-5 mb-lg-0">
                 <div class="post-content post-single">
                     <div class="post-media post-image">
-                        <img loading="lazy" src="{{ asset('frontendassets/images/news/news1.jpg') }}" class="img-fluid rounded shadow" alt="post-image" style="width: 100%; height: 400px; object-fit: cover;">
+                        <img loading="lazy"
+                             src="{{ $news->image ? asset('storage/' . $news->image) : asset('frontendassets/images/default.jpg') }}"
+                             class="img-fluid rounded shadow"
+                             alt="{{ $news->title }}"
+                             style="width: 100%; height: 400px; object-fit: cover;">
                     </div>
 
                     <div class="post-body mt-4">
                         <div class="entry-header">
                             <div class="post-meta mb-4">
-                                <span class="post-author mr-3">
-                                    <i class="far fa-user mr-1"></i> Admin
-                                </span>
-                                <span class="post-cat mr-3">
-                                    <i class="far fa-folder-open mr-1"></i> News
-                                </span>
-                                <span class="post-meta-date">
-                                    <i class="far fa-calendar mr-1"></i> April 26, 2025
-                                </span>
+                                <span class="post-author mr-3"><i class="far fa-user mr-1"></i> Admin</span>
+                                <span class="post-cat mr-3"><i class="far fa-folder-open mr-1"></i> News</span>
+                                <span class="post-meta-date"><i class="far fa-calendar mr-1"></i> {{ $news->created_at->format('F d, Y') }}</span>
                             </div>
                             <h2 class="entry-title font-weight-medium mb-4" style="font-size: 1.4rem; line-height: 1.4; color: #2c3e50;">
-                                Chakwera hails Pope Francis for his love and humility
+                                {{ $news->title }}
                             </h2>
                         </div>
 
                         <div class="entry-content text-justify">
-                            <p class="mb-4">President Dr Lazarus Chakwera has described late Pope Francis as a man of grand vision for humanity, kindness and faith.</p>
-                            
-                            <p class="mb-4">He said this Saturday at Maula Cathedral in Lilongwe during the Requiem Mass for Pope Francis. Chakwera said Pope Francis dedicated his service to the poor, the marginalized, the weak, and the condemned. "I will always cherish that encounter I had with Pope Francis some nine months ago. It lifted and soothed my spirit at a time when I was going through the darkest and most painful season of my presidency, and a season of deep anguish and pain for us Malawians.</p>
-
-                            <p class="mb-4">"Pope Francis expressed his condolences for the calamities we had suffered as a nation through his words of comfort and encouragement," Chakwera said. He, therefore, said he prays for a special touch of comfort from God as the passing of the Pope continues to be mourned by millions around the world, and all Catholics in Malawi.</p>
-
-                            <p class="mb-4">Archbishop George Desmond Tambala of Lilongwe Diocese thanked President Chakwera and Madam Monica Chakwera for attending the mass. He said the unity among Catholic members has been demonstrated through mass conducted in the 49 parishes under the Lilongwe diocese in honour of late Pope Francis.</p>
-
-                            <p>"Late Pope Francis preached about peace. This was demonstrated when he humbled himself and kissed the feet of South Sudanese leaders to plead them for sustainable peace," Tambala said. Pope Francis born as Jorge Mario Bergoglio died on 21 April, 2025 at the age of 88.</p>
+                            {!! $news->description !!}
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Sidebar -->
             <div class="col-lg-4">
                 <div class="sidebar sidebar-right">
                     <div class="widget recent-posts mb-5">
                         <h3 class="widget-title font-weight-bold mb-4 pb-3 border-bottom">Recent Posts</h3>
                         <ul class="list-unstyled">
-                            <li class="mb-4 pb-3 border-bottom">
-                                <div class="d-flex align-items-start">
-                                    <div class="posts-thumb mr-3 flex-shrink-0">
-                                        <a href="#" class="d-block">
-                                            <img loading="lazy" alt="National Action Plan" 
-                                                 src="{{ asset('frontendassets/images/news/news2.jpg') }}" 
-                                                 class="img-fluid rounded shadow-sm" 
-                                                 style="width: 90px; height: 70px; object-fit: cover;">
-                                        </a>
+                            @foreach ($recentPosts as $post)
+                                <li class="mb-4 pb-3 border-bottom">
+                                    <div class="d-flex align-items-start">
+                                        <div class="posts-thumb mr-3 flex-shrink-0">
+                                            <a href="{{ route('singlenews', $post->slug) }}" class="d-block">
+                                                <img loading="lazy"
+                                                     src="{{ $post->image ? asset('storage/' . $post->image) : asset('frontendassets/images/default.jpg') }}"
+                                                     alt="{{ $post->title }}"
+                                                     class="img-fluid rounded shadow-sm"
+                                                     style="width: 90px; height: 70px; object-fit: cover;">
+                                            </a>
+                                        </div>
+                                        <div class="post-info flex-grow-1">
+                                            <h5 class="entry-title mb-1">
+                                                <a href="{{ route('singlenews', $post->slug) }}" class="font-weight-medium text-dark hover-primary">
+                                                    {{ Str::limit($post->title, 60) }}
+                                                </a>
+                                            </h5>
+                                            <span class="post-date text-muted small d-block">
+                                                <i class="far fa-calendar-alt mr-1"></i>{{ $post->created_at->format('F d, Y') }}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div class="post-info flex-grow-1">
-                                        <h5 class="entry-title mb-1">
-                                            <a href="#" class="font-weight-medium text-dark hover-primary">National Action Plan for Open Government Partnership</a>
-                                        </h5>
-                                        <span class="post-date text-muted small d-block">
-                                            <i class="far fa-calendar-alt mr-1"></i>April 15, 2025
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-            
-                            <li class="mb-4 pb-3 border-bottom">
-                                <div class="d-flex align-items-start">
-                                    <div class="posts-thumb mr-3 flex-shrink-0">
-                                        <a href="#" class="d-block">
-                                            <img loading="lazy" alt="Projects in Blantyre" 
-                                                 src="{{ asset('frontendassets/images/news/news3.jpg') }}" 
-                                                 class="img-fluid rounded shadow-sm" 
-                                                 style="width: 90px; height: 70px; object-fit: cover;">
-                                        </a>
-                                    </div>
-                                    <div class="post-info flex-grow-1">
-                                        <h5 class="entry-title mb-1">
-                                            <a href="#" class="font-weight-medium text-dark hover-primary">Chakwera Satisfied With Projects In Blantyre And Chikwawa</a>
-                                        </h5>
-                                        <span class="post-date text-muted small d-block">
-                                            <i class="far fa-calendar-alt mr-1"></i>April 5, 2025
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
-            
-                            <li class="mb-4">
-                                <div class="d-flex align-items-start">
-                                    <div class="posts-thumb mr-3 flex-shrink-0">
-                                        <a href="#" class="d-block">
-                                            <img loading="lazy" alt="IFRC Meeting" 
-                                                 src="{{ asset('frontendassets/images/news/news4.jpg') }}" 
-                                                 class="img-fluid rounded shadow-sm" 
-                                                 style="width: 90px; height: 70px; object-fit: cover;">
-                                        </a>
-                                    </div>
-                                    <div class="post-info flex-grow-1">
-                                        <h5 class="entry-title mb-1">
-                                            <a href="#" class="font-weight-medium text-dark hover-primary">IFRC Secretary General Meets President Chakwera</a>
-                                        </h5>
-                                        <span class="post-date text-muted small d-block">
-                                            <i class="far fa-calendar-alt mr-1"></i>March 20, 2025
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -141,6 +96,7 @@
         </div>
     </div>
 </section>
+
 
 <style>
 
@@ -324,7 +280,7 @@
     .post-media img {
         height: 250px;
     }
-    
+
 }
 </style>
 

@@ -168,7 +168,7 @@
 
 @section('content')
 
-<div  class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
+{{-- <div  class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
   <div class="banner-text">
     <div class="container">
         <div class="row">
@@ -187,7 +187,7 @@
         </div><!-- Row end -->
     </div><!-- Container end -->
   </div><!-- Banner text end -->
-</div>
+</div> --}}
 
 
 

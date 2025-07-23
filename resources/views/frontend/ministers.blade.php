@@ -98,7 +98,7 @@
 
 @section('content')
 
-<div id="banner-area" class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
+{{-- <div id="banner-area" class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
     <div class="banner-text">
       <div class="container">
           <div class="row">
@@ -117,7 +117,7 @@
           </div><!-- Row end -->
       </div><!-- Container end -->
     </div><!-- Banner text end -->
-  </div><!-- Banner area end -->
+  </div><!-- Banner area end --> --}}
 
 
 <section id="main-container" class="main-container pb-4">
@@ -143,7 +143,7 @@
     </div>
     <!-- Title row end -->
 
-   
+
   @if($president)
 <div class="row justify-content-center mb-5">
   <div class="col-lg-6 col-md-8">

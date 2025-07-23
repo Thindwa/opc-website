@@ -28,7 +28,7 @@
 @section('content')
 
 <!-- Banner Section -->
-<div id="banner-area" class="banner-area" style="background-image: url('{{ $department->banner_image ? asset('storage/' . $department->banner_image) : asset('frontendassets/images/banner/banner1.jpg') }}')">
+{{-- <div id="banner-area" class="banner-area" style="background-image: url('{{ $department->banner_image ? asset('storage/' . $department->banner_image) : asset('frontendassets/images/banner/banner1.jpg') }}')">
     <div class="banner-text">
         <div class="container text-center">
             <div class="banner-heading">
@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Content Section -->
 <section class="about-opc section-padding">

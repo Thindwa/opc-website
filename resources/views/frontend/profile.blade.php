@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="banner-area" class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
+{{-- <div id="banner-area" class="banner-area" style="background-image:url(frontendassets/images/banner/banner1.jpg)">
   <div class="banner-text">
     <div class="container">
         <div class="row">
@@ -21,7 +21,7 @@
         </div><!-- Row end -->
     </div><!-- Container end -->
   </div><!-- Banner text end -->
-</div><!-- Banner area end --> 
+</div><!-- Banner area end -->  --}}
 
 
 <style>
@@ -73,7 +73,7 @@
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     }
-    
+
     .president-image-card {
         float: right;
         margin: 0 0 30px 30px;
@@ -86,17 +86,17 @@
         box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         transition: transform 0.3s ease;
     }
-    
+
     .president-image-card:hover {
         transform: translateY(-5px);
     }
-    
+
     .president-image {
         width: 100%;
         border-radius: 8px;
         margin-bottom: 15px;
     }
-    
+
     .profile-title {
         color: #2a5885;
         font-weight: 700;
@@ -104,7 +104,7 @@
         position: relative;
         padding-bottom: 15px;
     }
-    
+
     .profile-title:after {
         content: '';
         position: absolute;
@@ -114,18 +114,18 @@
         height: 3px;
         background: #28a745;
     }
-    
+
     .profile-content {
         text-align: justify;
         line-height: 1.8;
         font-size: 16px;
         color: #444;
     }
-    
+
     .profile-content p {
         margin-bottom: 20px;
     }
-    
+
     .profile-highlights {
         background-color: #f8f9fa;
         border-left: 4px solid #28a745;
@@ -133,11 +133,11 @@
         margin: 25px 0;
         border-radius: 0 5px 5px 0;
     }
-    
+
     .profile-highlights li {
         margin-bottom: 10px;
     }
-    
+
     @media (max-width: 768px) {
         .president-image-card {
             float: none;
@@ -152,7 +152,7 @@
     <div class="row">
       <div class="col-12">
         <div class="president-profile">
-          
+
           <!-- President Image Card -->
           <div class="president-image-card">
              <img
@@ -160,22 +160,22 @@
               alt="President"
               class="img-fluid"
             >
-           
+
             @if (!empty($profileCaption))
             <div class="text-muted small mt-2">{{ $profileCaption }}</div>
         @endif
           </div>
 
-         
+
           <!-- Profile Content -->
           <div class="profile-content">
-            
+
             {{-- Render blocks --}}
           <div class="executive-block-content">
             {!! \App\Helpers\RenderBlocksHelper::render($filteredContent) !!}
 
           </div>
-         
+
           </div>
 
         </div><!-- president-profile -->

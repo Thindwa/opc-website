@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Banner Section -->
-<div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
+{{-- <div id="banner-area" class="banner-area" style="background-image: url('{{ asset('frontendassets/images/banner/banner1.jpg') }}')">
     <div class="banner-text">
         <div class="container">
             <div class="row">
@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- News Section -->
 <section class="news-section section-padding">
@@ -38,106 +38,46 @@
         </div>
 
         <div class="row">
-            @foreach ([
-                [
-                    'image' => 'news1.jpg',
-                    'title' => 'Chakwera hails Pope Francis for his love and humility',
-                    'excerpt' => 'President Dr Lazarus Chakwera has described late Pope Francis as a man of grand vision for humanity, kindness and faith.',
-                    'date' => 'April 26, 2025'
-                ],
-                [
-                    'image' => 'news2.jpg',
-                    'title' => 'National Action Plan for Open Government Partnership in Malawi',
-                    'excerpt' => 'National Action Plan for Open Government Partnership in Malawi.',
-                    'date' => 'April 15, 2025'
-                ],
-                [
-                    'image' => 'news3.jpg',
-                    'title' => 'Chakwera Satisfied With Projects In Blantyre And Chikwawa',
-                    'excerpt' => 'Chakwera Satisfied With Projects In Blantyre And Chikwawa.',
-                    'date' => 'April 10, 2025'
-                ],
-                [
-                    'image' => 'news4.jpg',
-                    'title' => 'International Federation of Red Cross and Red Crescent (IFRC) Secretary General Meets President Chakwera   ',
-                    'excerpt' => 'International Federation of Red Cross and Red Crescent (IFRC) Secretary General Meets President Chakwera  at Kamuzu Palace .',
-                    'date' => 'March 17, 2025'
-                ],
-                [
-                    'image' => 'news5.jpg',
-                    'title' => 'US government commended for assisting Malawi with new secondary schools',
-                    'excerpt' => 'US government commended for assisting Malawi with new secondary schools.',
-                    'date' => 'March 15, 2025'
-                ],
-                [
-                    'image' => 'news7.jpg',
-                    'title' => '2023-2024 National Forestry Season Launched',
-                    'excerpt' => '2023-2024 National Forestry Season Launched.',
-                    'date' => 'February 18, 2025'
-                ],
-                [
-                    'image' => 'news6.jpg',
-                    'title' => 'Faith leaders reaffirm their commitment to work with government ',
-                    'excerpt' => 'Faith leaders reaffirm their commitment to work with government in promoting development, peace and unity.',
-                    'date' => 'February 05, 2025'
-                ],
-                [
-                    'image' => 'news9.jpg',
-                    'title' => 'President Chakwera Opens 2024/2025 Budget Session ',
-                    'excerpt' => 'President Chakwera Opens 2024/2025 Budget Session with the State of the Nation Address (SONA).',
-                    'date' => 'February 02, 2025'
-                ],
-                [
-                    'image' => 'news8.jpg',
-                    'title' => 'Government Commited To Uplift Mzuzu University',
-                    'excerpt' => 'President Dr. Lazarus Chakwera has said the construction of the Mzuzu University Auditorium and Library is part of his administration.',
-                    'date' => 'January 28, 2025'
-                ]
-            ] as $news)
-            <div class="col-lg-4 col-md-6 mb-5">
-                <div class="news-card card h-100 border-0 shadow-sm">
-                    <div class="news-image-wrapper">
-                        <img loading="lazy" class="card-img-top" src="{{ asset('frontendassets/images/news/'.$news['image']) }}" alt="{{ $news['title'] }}">
-                    </div>
-                    <div class="card-body">
-                        <div class="news-meta mb-2">
-                            <span class="text-muted"><i class="far fa-calendar-alt mr-2"></i>{{ $news['date'] }}</span>
+            @forelse ($newsItems as $news)
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="news-card card h-100 border-0 shadow-sm">
+                        <div class="news-image-wrapper">
+                            <img loading="lazy" class="card-img-top"
+                                 src="{{ $news->image ? asset('storage/' . $news->image) : asset('frontendassets/images/default.jpg') }}"
+                                 alt="{{ $news->title }}">
                         </div>
-                        <h3 class="card-title">
-                            <a href="{{route('singlenews')}}" class="stretched-link">{{ $news['title'] }}</a>
-                        </h3>
-                        <p class="card-text">{{ $news['excerpt'] }}</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-top-0">
-                <a class="learn-more" href="{{route('singlenews')}}" aria-label="Read more about {{ $news['title'] }}">
-                            Read More <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                        <div class="card-body">
+                            <div class="news-meta mb-2">
+                                <span class="text-muted">
+                                    <i class="far fa-calendar-alt mr-2"></i>{{ $news->created_at->format('F d, Y') }}
+                                </span>
+                            </div>
+                            <h3 class="card-title">
+                                <a href="{{ route('singlenews', $news->slug) }}" class="stretched-link">{{ $news->title }}</a>
+                            </h3>
+                            <p class="card-text">{{ Str::limit(strip_tags($news->description), 100) }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0">
+                            <a class="learn-more" href="{{ route('singlenews', $news->slug) }}">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @endforeach
+            @empty
+                <p class="text-center w-100">No news available.</p>
+            @endforelse
         </div>
 
         <!-- Pagination -->
         <div class="row">
             <div class="col-12">
-                <nav aria-label="News pagination">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="route('singlenews')" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $newsItems->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
 </section>
+
 
 <style>
 /* Banner */
@@ -177,7 +117,7 @@
 .section-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: #2c5036;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -201,7 +141,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #5bc0de;
+    color: #2c5036;
     border: 1px solid #dee2e6;
     margin: 0 15px;
     font-size: 1.25rem;
@@ -243,7 +183,7 @@
     transition: color 0.3s ease;
 }
 .card-title a:hover {
-    color: #5bc0de;
+    color: #2c5036;
 }
 .card-text {
     color: #6c757d;
@@ -259,7 +199,7 @@
     transition: color 0.3s ease;
 }
 .learn-more:hover {
-    color: #2c3e50;
+    color: #2c5036;
 }
 
 /* Pagination */
