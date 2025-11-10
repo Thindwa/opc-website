@@ -17,7 +17,10 @@ class VideoResource extends Resource
 {
     protected static ?string $model = Video::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-video-camera';
+    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationLabel = 'Videos';
 
     public static function form(Form $form): Form
     {
@@ -25,7 +28,8 @@ class VideoResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('title')->required()->maxLength(255),
                 Forms\Components\TextInput::make('youtube_url')
-                    ->label('YouTube Embed URL')
+                    ->label('YouTube URL')
+                    ->helperText('Paste any YouTube link (watch, share, or embed). The site will convert it automatically.')
                     ->required(),
             ]);
     }

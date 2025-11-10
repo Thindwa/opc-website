@@ -17,6 +17,7 @@
         "filament/filament": "^3.2",
         "hasnayeen/themes": "^3.0.24",
         "jeffgreco13/filament-breezy": "^2.6",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "outerweb/filament-image-library": "^2.7",

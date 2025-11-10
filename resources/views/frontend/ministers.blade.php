@@ -176,6 +176,22 @@
 </div>
 @endif
 
+    <!-- Second Vice President Section -->
+  @if($secondVp)
+<div class="row justify-content-center mb-5">
+  <div class="col-lg-6 col-md-8">
+    <div class="minister-card text-center">
+      <img src="{{ asset('storage/' . $secondVp->image) }}" alt="Second Vice President" class="img-fluid rounded shadow mb-3 minister-image">
+      <h3 class="mt-3" style="font-weight: bold;">Second Vice President</h3>
+      <p style="margin-bottom: 0; line-height: 1.4; font-size: 1.1rem;">
+        <strong>{{ $secondVp->name }}</strong><br>
+        {{ $secondVp->position }}
+      </p>
+    </div>
+  </div>
+</div>
+@endif
+
 
     <!-- Cabinet Ministers Section -->
     <div class="row text-center mb-5">

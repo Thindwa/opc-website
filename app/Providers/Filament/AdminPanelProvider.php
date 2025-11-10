@@ -46,8 +46,17 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+
+
+                \App\Filament\Widgets\ContentStatsWidget::class,
+                \App\Filament\Widgets\OrganizationStatsWidget::class,
+                \App\Filament\Widgets\SecurityDashboardWidget::class,
+                \App\Filament\Widgets\ActivityLogWidget::class,
+                \App\Filament\Widgets\RecentActivitiesWidget::class,
+                \App\Filament\Widgets\RecentNewsWidget::class,
+                \App\Filament\Widgets\UpcomingEventsWidget::class,
+                \App\Filament\Widgets\QuickActionsWidget::class,
+                \App\Filament\Widgets\ContentChartWidget::class,
             ])
             ->plugins([
                 FilamentImageLibraryPlugin::make()

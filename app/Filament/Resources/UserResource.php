@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use App\Rules\SecurePassword;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,8 +17,9 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
     protected static ?string $navigationGroup = 'Administration';
+    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel = 'Users';
 
     public static function form(Form $form): Form
     {
@@ -37,7 +39,8 @@ class UserResource extends Resource
                     ->columnSpan(1)
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->dehydrated(fn ($state) => filled($state))
-                    ->required(fn (string $context): bool => $context === 'create'),
+                    ->required(fn (string $context): bool => $context === 'create')
+                    ->rule(new SecurePassword()),
                 Forms\Components\TextInput::make('password_confirmation')
                     ->required(fn (string $context): bool => $context === 'create')
                     ->columnSpan(1)

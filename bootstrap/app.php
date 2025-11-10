@@ -11,7 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Security headers middleware (safe to enable)
+        $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+
+        // Rate limiting and CSRF protection
+        $middleware->throttleApi();
+        $middleware->validateCsrfTokens();
+
+        // Input sanitization for web routes only (exclude admin)
+        $middleware->web(append: [
+            \App\Http\Middleware\InputSanitizationMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

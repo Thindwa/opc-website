@@ -17,7 +17,10 @@ class MinisterResource extends Resource
 {
     protected static ?string $model = Minister::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static ?string $navigationGroup = 'Organization';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationLabel = 'Ministers';
 
     public static function form(Form $form): Form
 {
@@ -37,14 +40,18 @@ class MinisterResource extends Resource
                 ->options([
                     'President' => 'President',
                     'VP' => 'Vice President',
+                    'Second_VP' => 'Second Vice President',
                     'Ministers' => 'Minister',
                 ])
                 ->native(false), // optional: makes it a searchable dropdown
 
             Forms\Components\FileUpload::make('image')
                 ->image()
-                ->directory('minister-images') // optional folder
+                ->directory('minister-images')
                 ->visibility('public')
+                ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                ->maxSize(2048) // 2MB
+                ->imageEditor()
                 ->imagePreviewHeight('150'),
         ]);
 }

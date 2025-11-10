@@ -17,7 +17,11 @@ class DministerResource extends Resource
 {
     protected static ?string $model = Dminister::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationGroup = 'Organization';
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationLabel = 'Deputy Ministers';
 
     public static function form(Form $form): Form
 {
@@ -36,11 +40,12 @@ class DministerResource extends Resource
             Forms\Components\FileUpload::make('image')
                 ->label('Profile Image')
                 ->image()
-                ->imageEditor() // Optional image editor
-                ->directory('dminister-images') // Optional storage path
-                ->visibility('public') // For public access
-                ->imagePreviewHeight('150')
-                ->maxSize(1024), // Optional: limit to 1MB
+                ->imageEditor()
+                ->directory('dminister-images')
+                ->visibility('public')
+                ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                ->maxSize(2048) // 2MB
+                ->imagePreviewHeight('150'),
         ]);
 }
 

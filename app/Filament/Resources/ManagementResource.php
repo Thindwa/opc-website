@@ -17,7 +17,10 @@ class ManagementResource extends Resource
 {
     protected static ?string $model = Management::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationGroup = 'Organization';
+    protected static ?int $navigationSort = 4;
+    protected static ?string $navigationLabel = 'Management';
 
     public static function form(Form $form): Form
 {
@@ -26,11 +29,11 @@ class ManagementResource extends Resource
             Forms\Components\TextInput::make('name')
                 ->required()
                 ->maxLength(255),
-                
+
             Forms\Components\TextInput::make('position')
                 ->required()
                 ->maxLength(255),
-                
+
             Forms\Components\Select::make('position_type')
                 ->required()
                 ->options([
@@ -42,11 +45,14 @@ class ManagementResource extends Resource
                     'DD' => 'DD',
                 ])
                 ->native(false),
-                
+
             Forms\Components\FileUpload::make('image')
                 ->image()
-                ->directory('management-images') // optional: customize storage folder
-                ->visibility('public') // adjust based on your setup
+                ->directory('management-images')
+                ->visibility('public')
+                ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                ->maxSize(2048) // 2MB
+                ->imageEditor()
                 ->imagePreviewHeight('150'),
         ]);
 }

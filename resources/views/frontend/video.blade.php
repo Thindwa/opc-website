@@ -47,7 +47,7 @@
                         <div class="col-lg-6 col-md-6 mb-4">
                             <article class="video-item card h-100 border-0 shadow-sm">
                                 <div class="video-container rounded-top">
-                                    <iframe src="{{ $video->youtube_url }}" frameborder="0"
+                                    <iframe src="{{ $video->embed_url }}" frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen
                                         title="{{ $video->title }}"></iframe>

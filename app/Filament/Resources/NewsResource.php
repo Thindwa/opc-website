@@ -17,7 +17,10 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationLabel = 'News Articles';
 
     public static function form(Form $form): Form
     {
@@ -31,7 +34,15 @@ class NewsResource extends Resource
                 Forms\Components\Hidden::make('slug'),
 
                 Forms\Components\FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                    ->maxSize(5120) // 5MB
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '16:9',
+                        '4:3',
+                        '1:1',
+                    ]),
 
                 Forms\Components\RichEditor::make('description')
                     ->required()

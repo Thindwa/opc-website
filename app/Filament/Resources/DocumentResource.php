@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DocumentResource\Pages;
 use App\Filament\Resources\DocumentResource\RelationManagers;
 use App\Models\Document;
+use App\Services\SecureFileUploadService;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -17,7 +18,10 @@ class DocumentResource extends Resource
 {
     protected static ?string $model = Document::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document';
+    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?int $navigationSort = 5;
+    protected static ?string $navigationLabel = 'Documents';
 
     public static function form(Form $form): Form
 {
@@ -72,6 +76,8 @@ class DocumentResource extends Resource
                 ->downloadable()
                 ->preserveFilenames()
                 ->reorderable()
+                ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain', 'text/csv'])
+                ->maxSize(10240) // 10MB
                 ->columnSpanFull(),
 
         ]);

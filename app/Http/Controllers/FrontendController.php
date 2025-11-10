@@ -143,9 +143,10 @@ class FrontendController extends Controller
 
         $president = $ministers->where('position_type', 'President')->first();
         $vp = $ministers->where('position_type', 'VP')->first();
+        $secondVp = $ministers->where('position_type', 'Second_VP')->first();
         $cabinet = $ministers->where('position_type', 'Ministers')->all();
 
-        return view('frontend.ministers', compact('president', 'vp', 'cabinet'));
+        return view('frontend.ministers', compact('president', 'vp', 'secondVp', 'cabinet'));
     }
 
         public function deputy()

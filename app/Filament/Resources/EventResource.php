@@ -17,7 +17,10 @@ class EventResource extends Resource
 {
     protected static ?string $model = Event::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationLabel = 'Events';
 
     public static function form(Form $form): Form
     {
@@ -35,7 +38,15 @@ class EventResource extends Resource
             Forms\Components\TextInput::make('location')->required(),
 
             Forms\Components\FileUpload::make('image')
-                ->image(),
+                ->image()
+                ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
+                ->maxSize(5120) // 5MB
+                ->imageEditor()
+                ->imageEditorAspectRatios([
+                    '16:9',
+                    '4:3',
+                    '1:1',
+                ]),
 
             Forms\Components\RichEditor::make('description')
                 ->columnSpanFull()
