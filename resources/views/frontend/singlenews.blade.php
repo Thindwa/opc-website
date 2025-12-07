@@ -1,5 +1,7 @@
 @extends('layouts.frontend')
 
+@section('title', $seo['title'] ?? $news->title . ' - ' . setting('general.brand_name', 'Office of the President and Cabinet'))
+
 @section('content')
 
 <!-- Banner Section -->
@@ -31,12 +33,12 @@
             <!-- Main Content -->
             <div class="col-lg-8 mb-5 mb-lg-0">
                 <div class="post-content post-single">
-                    <div class="post-media post-image">
+                    <div class="post-media post-image" style="overflow: hidden; border-radius: 8px; height: 400px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
                         <img loading="lazy"
                              src="{{ $news->image ? asset('storage/' . $news->image) : asset('frontendassets/images/default.jpg') }}"
                              class="img-fluid rounded shadow"
                              alt="{{ $news->title }}"
-                             style="width: 100%; height: 400px; object-fit: cover;">
+                             style="width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block;">
                     </div>
 
                     <div class="post-body mt-4">
@@ -52,7 +54,7 @@
                         </div>
 
                         <div class="entry-content text-justify">
-                            {!! $news->description !!}
+                            {!! \App\Helpers\HtmlSanitizer::sanitize($news->description) !!}
                         </div>
                     </div>
                 </div>
@@ -67,13 +69,13 @@
                             @foreach ($recentPosts as $post)
                                 <li class="mb-4 pb-3 border-bottom">
                                     <div class="d-flex align-items-start">
-                                        <div class="posts-thumb mr-3 flex-shrink-0">
-                                            <a href="{{ route('singlenews', $post->slug) }}" class="d-block">
+                                        <div class="posts-thumb mr-3 flex-shrink-0" style="width: 90px; height: 70px; border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
+                                            <a href="{{ route('singlenews', $post->slug) }}" class="d-block w-100 h-100">
                                                 <img loading="lazy"
                                                      src="{{ $post->image ? asset('storage/' . $post->image) : asset('frontendassets/images/default.jpg') }}"
                                                      alt="{{ $post->title }}"
                                                      class="img-fluid rounded shadow-sm"
-                                                     style="width: 90px; height: 70px; object-fit: cover;">
+                                                     style="width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block;">
                                             </a>
                                         </div>
                                         <div class="post-info flex-grow-1">
@@ -266,7 +268,7 @@
     .entry-title {
         font-size: 1.4rem;
     }
-    .post-media img {
+    .post-media.post-image {
         height: 300px;
     }
 }
@@ -277,7 +279,7 @@
     .entry-title {
         font-size: 1.3rem;
     }
-    .post-media img {
+    .post-media.post-image {
         height: 250px;
     }
 

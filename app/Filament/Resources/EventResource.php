@@ -40,7 +40,7 @@ class EventResource extends Resource
             Forms\Components\FileUpload::make('image')
                 ->image()
                 ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
-                ->maxSize(5120) // 5MB
+                ->maxSize(20480) // 20MB
                 ->imageEditor()
                 ->imageEditorAspectRatios([
                     '16:9',

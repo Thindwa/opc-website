@@ -51,7 +51,7 @@ class ManagementResource extends Resource
                 ->directory('management-images')
                 ->visibility('public')
                 ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'])
-                ->maxSize(2048) // 2MB
+                ->maxSize(20480) // 20MB
                 ->imageEditor()
                 ->imagePreviewHeight('150'),
         ]);

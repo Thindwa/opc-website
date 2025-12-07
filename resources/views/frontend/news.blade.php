@@ -161,12 +161,16 @@
 .news-image-wrapper {
     overflow: hidden;
     height: 200px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    position: relative;
 }
 .news-card img {
     transition: transform 0.5s ease;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 30%;
+    display: block;
 }
 .news-card:hover img {
     transform: scale(1.05);
@@ -241,6 +245,7 @@
     .news-section { padding: 3rem 0; }
     .news-image-wrapper { height: 140px; }
     .card-title { font-size: 0.85rem; } /* Final adjustment for smallest screens */
+    .news-image-wrapper { padding: 5px; }
 }
 </style>
 

@@ -75,8 +75,8 @@
     }
 
     .president-image-card {
-        float: right;
-        margin: 0 0 30px 30px;
+        float: left;
+        margin: 0 30px 30px 0;
         width: 300px;
         border: 2px solid #28a745;
         padding: 20px;

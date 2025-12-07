@@ -1,3 +1,3 @@
 <div class="my-3">
-    {!! $content !!}
+    {!! \App\Helpers\HtmlSanitizer::sanitize($content ?? '') !!}
 </div>

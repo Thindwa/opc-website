@@ -43,9 +43,16 @@ class FrontendController extends Controller
             $blocks = $blocks->forget($accordionIndex)->values();
         }
 
+        // SEO for home page
+        $seo = [
+            'title' => setting('seo.title', 'Office of the President and Cabinet - Government of Malawi'),
+            'description' => setting('seo.description', 'Official website of the Office of the President and Cabinet, Government of Malawi.'),
+        ];
+
         return view('frontend.home', [
             'page' => $page,
             'blocks' => $blocks->all(),
+            'seo' => $seo,
         ]);
     }
 
@@ -134,7 +141,11 @@ class FrontendController extends Controller
     {
         $page = Page::where('slug', 'service-charter')->firstOrFail();
 
-    return view('frontend.charter', compact('page'));
+        $seo = [
+            'title' => $page->title . ' - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+        ];
+
+        return view('frontend.charter', compact('page', 'seo'));
     }
 
     public function ministers()
@@ -146,24 +157,58 @@ class FrontendController extends Controller
         $secondVp = $ministers->where('position_type', 'Second_VP')->first();
         $cabinet = $ministers->where('position_type', 'Ministers')->all();
 
-        return view('frontend.ministers', compact('president', 'vp', 'secondVp', 'cabinet'));
+        $header = \App\Helpers\SettingsHelper::getMinistersHeader();
+
+        $seo = [
+            'title' => 'Cabinet Ministers - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+            'description' => 'Meet the Cabinet Ministers of Malawi, including the President, Vice President, and all Cabinet Ministers responsible for various government departments.',
+        ];
+
+        return view('frontend.ministers', compact('president', 'vp', 'secondVp', 'cabinet', 'header', 'seo'));
     }
 
-        public function deputy()
+    public function deputy()
     {
         $dministers = Dminister::all();
-        return view('frontend.deputy', compact('dministers'));
+        $header = \App\Helpers\SettingsHelper::getDeputyMinistersHeader();
+
+        $seo = [
+            'title' => 'Deputy Ministers - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+            'description' => 'Meet the Deputy Ministers of Malawi who assist Cabinet Ministers in the executive branch of the government.',
+        ];
+
+        return view('frontend.deputy', compact('dministers', 'header', 'seo'));
     }
 
 
     public function history()
-{
-    $page = Page::where('slug', 'history-page')->firstOrFail(); // or any identifier
+    {
+        $page = Page::where('slug', 'history-page')->firstOrFail();
 
-    return view('frontend.history', [
-        'page' => $page,
-    ]);
-}
+        $seo = [
+            'title' => $page->title . ' - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+        ];
+
+        return view('frontend.history', [
+            'page' => $page,
+            'seo' => $seo,
+        ]);
+    }
+
+    public function chiefSecretaries()
+    {
+        $page = Page::where('slug', 'history-of-chief-secretaries')->firstOrFail();
+
+        $seo = [
+            'title' => $page->title . ' - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+        ];
+
+        return view('frontend.secretaries-history', [
+            'page' => $page,
+            'seo' => $seo,
+        ]);
+    }
+
 
     public function departments()
     {
@@ -182,7 +227,13 @@ class FrontendController extends Controller
     public function news()
     {
         $newsItems = News::latest()->paginate(6);
-        return view('frontend.news', compact('newsItems'));
+
+        $seo = [
+            'title' => 'News & Updates - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+            'description' => 'Stay updated with the latest news and updates from the Office of the President and Cabinet, Government of Malawi.',
+        ];
+
+        return view('frontend.news', compact('newsItems', 'seo'));
     }
 
     public function singlenews($slug)
@@ -190,7 +241,14 @@ class FrontendController extends Controller
         $news = News::where('slug', $slug)->firstOrFail();
         $recentPosts = News::latest()->take(5)->get();
 
-        return view('frontend.singlenews', compact('news', 'recentPosts'));
+        // Prepare SEO data for news article
+        $seo = [
+            'title' => $news->title . ' - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+            'description' => \Illuminate\Support\Str::limit(strip_tags($news->description ?? ''), 160, '...'),
+            'image' => $news->image ? asset('storage/' . $news->image) : null,
+        ];
+
+        return view('frontend.singlenews', compact('news', 'recentPosts', 'seo'));
     }
 
 

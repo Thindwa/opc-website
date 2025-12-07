@@ -33,7 +33,7 @@
                 <div class="row align-items-center">
                     <div class="logo col-lg-3 text-center text-lg-left mb-1 mb-md-1 mb-lg-0">
                         <a class="d-block" href="index.html">
-                            <img loading="lazy" src="{{asset('frontendassets/images/logo.jpg')}}" alt="Emblame"
+                            <img loading="lazy" src="{{ asset('frontendassets/images/logo.jpg') }}" alt="Emblame"
                                 style="height: 50px; width: auto;">
                         </a>
                     </div><!-- logo end -->
@@ -41,7 +41,7 @@
                         <ul class="top-info-box">
                             <li class="header-get-a-quote">
                                 <a href="#" style="display: inline-block; padding: 0;">
-                                    <img src="{{asset('frontendassets/images/flags/emblam1.jpg')}}" alt="Malawi Flag"
+                                    <img src="{{ asset('frontendassets/images/flags/emblam1.jpg') }}" alt="Malawi Flag"
                                         style="height: 40px; width: auto; border: none; box-shadow: none;">
                                 </a>
                             </li>
@@ -67,8 +67,7 @@
                         <div id="navbar-collapse" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav mr-auto flex-wrap ">
 
-                                <li class="nav-item"><a class="nav-link"
-                                        href="{{ route('frontend.home') }}">Home</a>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('frontend.home') }}">Home</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About
@@ -79,11 +78,15 @@
                                         <li><a href="{{ route('profile') }}">His Excellency Profile</a></li>
                                         <li><a href="{{ route('management') }}">OPC Top Management</a></li>
                                         {{-- <li><a href="{{ route('charter') }}">Service Charter</a></li> --}}
-                                        <li><a href="{{ route('history') }}">History of the Republic of Malawi</a></li>
+                                        <li><a href="{{ route('history') }}">History of
+                                                the Malawi Presidency</a></li>
+                                        <li><a href="{{ route('chief-secretaries') }}">History of the Malawi Chief
+                                                Secretaries</a></li>
                                     </ul>
                                 </li>
 
-                                <li class="nav-item"><a class="nav-link" href="{{route('departments.index')}}">Departments</a></li>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('departments.index') }}">Departments</a></li>
 
                                 {{-- <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -122,8 +125,8 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('charter') }}"
-                                        rel="noopener noreferrer">Service Charter</a>
+                                    <a class="nav-link" href="{{ route('charter') }}" rel="noopener noreferrer">Service
+                                        Charter</a>
                                 </li>
                                 {{-- <li class="nav-item"><a class="nav-link" href="{{route('services')}}">Services</a></li> --}}
                                 <li class="nav-item">
@@ -133,8 +136,8 @@
                                     <a class="nav-link" href="{{ route('upcoming') }}">Events</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle"
-                                        data-toggle="dropdown">Resources <i class="fa fa-angle-down"></i></a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Resources
+                                        <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu" role="menu">
 
                                         <li><a href="{{ route('documents') }}">Documents Library</a></li>
@@ -151,7 +154,7 @@
                                 </li>
 
                                 <li class="nav-item"><a class="nav-link" href="{{ route('contacts') }}">Contact
-                                        </a></li>
+                                    </a></li>
                             </ul>
                         </div>
                     </nav>

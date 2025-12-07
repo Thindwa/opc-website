@@ -38,9 +38,9 @@
     <div class="row justify-content-center">
 
       @foreach([
-          ['icon' => 'fas fa-map-marker-alt', 'title' => 'Contact Address:', 'text' => 'The Secretary to the President and Cabinet, Office of the President and Cabinet, Capital Hill Circle, Private Bag 301, Capital City, Lilongwe 3, Malawi.'],
+          ['icon' => 'fas fa-map-marker-alt', 'title' => 'Contact Address:', 'text' => 'The Chief Secretary, Office of the President and Cabinet, Capital Hill Circle, Private Bag 301, Capital City, Lilongwe 3, Malawi.'],
           ['icon' => 'fa fa-envelope', 'title' => 'Email Us', 'text' => 'opc@opc.gov.mw'],
-          ['icon' => 'fa fa-phone-square', 'title' => 'Call Us', 'text' => '(+265) 1789311 / 1789 411']
+          ['icon' => 'fa fa-phone-square', 'title' => 'Call Us', 'text' => '(+265) 111789311 / 111789 411']
       ] as $contact)
       <div class="col-md-4">
         <div class="content-card card bg-light-red text-center mb-4">
@@ -64,7 +64,7 @@
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3065.4916181403846!2d33.78752357334662!3d-13.946697680176698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1921d370a3efe6b3%3A0x468cd9b572a9016a!2sOffice%20of%20President%20and%20Cabinet!5e1!3m2!1sen!2smw!4v1688919887578!5m2!1sen!2smw" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 
-    <!-- Contact Form -->
+    {{-- <!-- Contact Form -->
     <div class="row">
       <div class="col-md-12">
         <h3 class="column-title text-center">We Love to Hear from You</h3>
@@ -99,7 +99,7 @@
           </div>
         </form>
       </div>
-    </div>
+    </div> --}}
 
   </div>
 </section>

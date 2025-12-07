@@ -25,7 +25,7 @@
             <thead class="table-success">
                 <tr>
                     @foreach ($headers as $header)
-                        <th>{!! $header['text'] ?? '' !!}</th>
+                        <th>{{ \App\Helpers\HtmlSanitizer::escape($header['text'] ?? '') }}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -41,7 +41,7 @@
                                 @if (!empty($cell['image']))
                                     <img src="{{ asset('storage/' . $cell['image']) }}" width="80" class="mb-2 d-block">
                                 @endif
-                                {!! $cell['text'] ?? '' !!}
+                                {{ \App\Helpers\HtmlSanitizer::escape($cell['text'] ?? '') }}
                             </td>
                         @endforeach
                     </tr>

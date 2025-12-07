@@ -4,15 +4,62 @@
                 <!-- Basic Page Needs
                 ================================================== -->
                 <meta charset="utf-8">
-                <title>Office of the President and Cabinet</title>
+
+                @php
+                    // Get page-specific SEO or use defaults
+                    $pageTitle = isset($seo) && isset($seo['title']) ? $seo['title'] : null;
+                    $pageDescription = isset($seo) && isset($seo['description']) ? $seo['description'] : null;
+                    $pageKeywords = isset($seo) && isset($seo['keywords']) ? $seo['keywords'] : null;
+                    $pageImage = isset($seo) && isset($seo['image']) ? $seo['image'] : null;
+
+                    // Get defaults from settings
+                    $defaultTitle = setting('seo.title', 'Office of the President and Cabinet - Government of Malawi');
+                    $defaultDescription = setting('seo.description', 'Official website of the Office of the President and Cabinet, Government of Malawi.');
+                    $defaultKeywords = setting('seo.keywords', 'Malawi, Government, OPC, Office of the President and Cabinet');
+                    $defaultImageSetting = setting('seo.image');
+                    $defaultImage = $defaultImageSetting ? asset('storage/' . $defaultImageSetting) : asset('frontendassets/images/default.jpg');
+
+                    // Use page-specific or defaults
+                    $seoTitle = $pageTitle ?? $defaultTitle;
+                    $seoDescription = $pageDescription ?? $defaultDescription;
+                    $seoKeywords = $pageKeywords ?? $defaultKeywords;
+                    $seoImage = $pageImage ?? $defaultImage;
+                    $siteName = setting('general.brand_name', 'Office of the President and Cabinet');
+                    $currentUrl = url()->current();
+                @endphp
+
+                <title>@yield('title', $seoTitle)</title>
 
                 <!-- Mobile Specific Metas
                 ================================================== -->
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="description" content="Construction Html5 Template">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-                <meta name=author content="Themefisher">
-                <meta name=generator content="Themefisher Constra HTML Template v1.0">
+
+                <!-- SEO Meta Tags -->
+                <meta name="description" content="{{ $seoDescription }}">
+                @if(!empty($seoKeywords))
+                <meta name="keywords" content="{{ $seoKeywords }}">
+                @endif
+                <meta name="author" content="{{ $siteName }}">
+                <meta name="robots" content="index, follow">
+                <link rel="canonical" href="{{ $currentUrl }}">
+
+                <!-- Open Graph / Facebook -->
+                <meta property="og:type" content="website">
+                <meta property="og:url" content="{{ $currentUrl }}">
+                <meta property="og:title" content="@yield('title', $seoTitle)">
+                <meta property="og:description" content="{{ $seoDescription }}">
+                <meta property="og:image" content="{{ $seoImage }}">
+                <meta property="og:site_name" content="{{ $siteName }}">
+
+                <!-- Twitter -->
+                <meta name="twitter:card" content="summary_large_image">
+                <meta name="twitter:url" content="{{ $currentUrl }}">
+                <meta name="twitter:title" content="@yield('title', $seoTitle)">
+                <meta name="twitter:description" content="{{ $seoDescription }}">
+                <meta name="twitter:image" content="{{ $seoImage }}">
+
+                @yield('meta')
 
                 <!-- Favicon
                 ================================================== -->
@@ -33,6 +80,8 @@
                 <link rel="stylesheet" href="{{ asset('frontendassets/plugins/colorbox/colorbox.css')}}">
                 <!-- Template styles-->
                 <link rel="stylesheet" href="{{ asset('frontendassets/css/style.css')}}">
+                <!-- Slider styles -->
+                <link rel="stylesheet" href="{{ asset('css/sliders.css')}}">
             </head>
         <body>
             <div class="body-inner">

@@ -8,7 +8,7 @@
 <div class="row my-4">
     @foreach ($content as $column)
         <div class="{{ $colClass }}">
-            {!! $column['html'] !!}
+            {!! \App\Helpers\HtmlSanitizer::sanitize($column['html'] ?? '') !!}
         </div>
     @endforeach
 </div>

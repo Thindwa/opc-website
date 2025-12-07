@@ -127,18 +127,22 @@
       <div class="col-lg-12">
         <!-- Government Logo -->
         <div class="logo my-3">
-          <img src="frontendassets/images/flags/emblam1.jpg" class="img-fluid" id="flags" alt="Government of Malawi Logo" style="width:120px; height:auto;">
+          <img src="{{ $header['logo'] ? (str_starts_with($header['logo'], 'http') ? $header['logo'] : asset('storage/' . $header['logo'])) : asset('frontendassets/images/flags/emblam1.jpg') }}" class="img-fluid" id="flags" alt="Government of Malawi Logo" style="width:120px; height:auto;">
         </div>
 
         <!-- Title -->
-        <h6 class="section-main-title" style="font-size: 10px;">Government of Malawi</h6>
-        <h2 class="section-title">Cabinet Ministers</h2>
-        <p><strong>The appointments are with effect from 1st January 2025.</strong></p>
+        <h6 class="section-main-title" style="font-size: 10px;">{{ $header['title'] ?? 'Government of Malawi' }}</h6>
+        <h2 class="section-title">{{ $header['main_title'] ?? 'Cabinet Ministers' }}</h2>
+        @if(!empty($header['appointment_text']))
+        <p><strong>{{ $header['appointment_text'] }}</strong></p>
+        @endif
 
         <!-- Introduction Paragraph -->
+        @if(!empty($header['intro']))
         <p class="intro-text mb-5">
-          The Cabinet of Malawi is the executive branch of the government, made up of the President of Malawi, Vice President, Ministers and Deputy Ministers responsible for the different departments.
+          {{ $header['intro'] }}
         </p>
+        @endif
       </div>
     </div>
     <!-- Title row end -->

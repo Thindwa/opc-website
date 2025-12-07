@@ -24,6 +24,7 @@ Route::get('/charter', [FrontendController::class,'charter'])->name('charter');
 Route::get('/ministers', [FrontendController::class,'ministers'])->name('ministers');
 Route::get('/deputy', [FrontendController::class,'deputy'])->name('deputy');
 Route::get('/history', [FrontendController::class,'history'])->name('history');
+Route::get('/chief-secretaries', [FrontendController::class,'chiefSecretaries'])->name('chief-secretaries');
 Route::get('/dodma', [FrontendController::class,'dodma'])->name('dodma');
 
 Route::get('/departments', [FrontendController::class, 'departments'])->name('departments.index');

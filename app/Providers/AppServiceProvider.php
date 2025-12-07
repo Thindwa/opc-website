@@ -63,7 +63,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventAccessingMissingAttributes();
 
-        Model::unguard();
+        // Mass assignment protection is enabled by default in Laravel
+        // Each model should define $fillable or $guarded arrays
+        // Model::unguard() removed for security - mass assignment protection is now active
     }
 
     private function configureFilament(): void

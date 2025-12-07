@@ -37,7 +37,9 @@ class DepartmentResource extends Resource
                 ->required()
                 ->unique(ignoreRecord: true),
             TextInput::make('icon')->label('Icon (FontAwesome class)'),
-            FileUpload::make('banner_image')->directory('departments/banners'),
+            FileUpload::make('banner_image')
+                ->directory('departments/banners')
+                ->maxSize(20480), // 20MB
             BlocksInput::make('content')
                 ->label('Department Content')
                 ->blocks([

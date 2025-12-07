@@ -8,7 +8,22 @@ class SliderBlock extends Block
 {
     public static function block(\Filament\Forms\Form $form): Components\Builder\Block
     {
-        return parent::block($form)->schema([
+        return parent::block($form)
+            ->label('Slider / Carousel')
+            ->icon('heroicon-o-photo')
+            ->schema([
+            Components\Select::make('design')
+                ->label('Slider Design')
+                ->options([
+                    'design1' => 'Design 1: Side-by-Side (Text Left, Image Right)',
+                    'design2' => 'Design 2: Text Overlay on Image (Left Aligned)',
+                    'design3' => 'Design 3: Centered Text Overlay on Image',
+                    'design4' => 'Design 4: Side-by-Side (Image Left, Text Right)',
+                    'design5' => 'Design 5: Full-Width Image with Text Below',
+                ])
+                ->default('design1')
+                ->required()
+                ->helperText('Choose a professional slider design style'),
             Components\Repeater::make('slides')
                 ->label('Slides')
                 ->schema([

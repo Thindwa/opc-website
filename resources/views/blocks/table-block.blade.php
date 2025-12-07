@@ -9,7 +9,7 @@
         <thead class="table-success">
             <tr>
                 @foreach($headers as $header)
-                    <th>{!! $header['text'] ?? '' !!}</th>
+                    <th>{{ \App\Helpers\HtmlSanitizer::escape($header['text'] ?? '') }}</th>
                 @endforeach
             </tr>
         </thead>
@@ -25,7 +25,7 @@
                             @endforeach
                         </ul>
                     @else
-                        {!! $cell['value'] ?? '' !!}
+                        {{ \App\Helpers\HtmlSanitizer::escape($cell['value'] ?? '') }}
                     @endif
                 </td>
                 @endforeach
