@@ -28,6 +28,7 @@
 
 @php
     use Illuminate\Support\Str;
+    $activeCategorySlug = $activeCategory ? Str::slug($activeCategory) : null;
 @endphp
 
 <section class="about-opc section-padding">
@@ -56,17 +57,20 @@
                                     @foreach ($documents as $category => $items)
                                         @php
                                             $tabId = Str::slug($category);
+                                            $isActive = $activeCategorySlug
+                                                ? $activeCategorySlug === $tabId
+                                                : $loop->first;
                                         @endphp
                                         <li class="nav-item" role="presentation">
                                             <button
-                                                class="nav-link @if ($loop->first) active @endif"
+                                                class="nav-link @if ($isActive) active @endif"
                                                 id="{{ $tabId }}-tab"
                                                 data-bs-toggle="tab"
                                                 data-bs-target="#{{ $tabId }}"
                                                 type="button"
                                                 role="tab"
                                                 aria-controls="{{ $tabId }}"
-                                                aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                                                aria-selected="{{ $isActive ? 'true' : 'false' }}"
                                             >
                                                 {{ $category }}
                                             </button>
@@ -81,9 +85,12 @@
                                     @foreach ($documents as $category => $docs)
                                         @php
                                             $tabId = Str::slug($category);
+                                            $isActive = $activeCategorySlug
+                                                ? $activeCategorySlug === $tabId
+                                                : $loop->first;
                                         @endphp
                                         <div
-                                            class="tab-pane fade @if ($loop->first) show active @endif"
+                                            class="tab-pane fade @if ($isActive) show active @endif"
                                             id="{{ $tabId }}"
                                             role="tabpanel"
                                             aria-labelledby="{{ $tabId }}-tab"

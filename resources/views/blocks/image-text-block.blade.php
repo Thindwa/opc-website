@@ -1,32 +1,9 @@
-<section class="call-to-action-box no-padding">
-    <div class="container">
-      <div class="action-style-box">
-        <div class="row align-items-center">
-          <div class="col-md-8 text-center text-md-left">
-            <div class="call-to-action-text">
-              <h3 class="action-title">Profile of H.E. {{ $name ?? '' }}</h3>
-            </div>
-          </div>
-          <div class="col-md-4 text-center text-md-right mt-3 mt-md-0">
-            <div class="call-to-action-btn">
-              <a class="btn btn-light" href="{{route('profile')}}">View Profile</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 <section class="ts-features py-5">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-4">
-                <div class="minister-image text-center">
+        <div class="row align-items-stretch">
+            <div class="col-lg-4 d-flex">
+                <div class="minister-image text-center w-100">
                     <img src="{{ asset('storage/' . ($image ?? '')) }}" alt="President" class="img-fluid rounded shadow">
-                    <h4 class="mt-3">His Excellency</h4>
-                    <div class="minister-details">
-                        <span class="d-block font-weight-bold">{{ $name ?? '' }}</span>
-                        <span>President of the Republic of Malawi</span>
-                    </div>
                 </div>
             </div>
 
@@ -75,3 +52,28 @@
         </div>
     </div>
 </section>
+
+<style>
+    .ts-features .minister-image {
+        display: flex;
+        height: 100%;
+    }
+
+    .ts-features .minister-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    @media (max-width: 991px) {
+        .ts-features .minister-image {
+            display: block;
+            height: auto;
+        }
+
+        .ts-features .minister-image img {
+            height: auto;
+        }
+    }
+</style>

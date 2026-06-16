@@ -48,4 +48,5 @@ Route::get('/upcoming', [FrontendController::class,'upcoming'])->name('upcoming'
 Route::get('/documents', [FrontendController::class,'documents'])->name('documents');
 Route::get('/photo', [FrontendController::class,'photo'])->name('photo');
 Route::get('/video', [FrontendController::class,'video'])->name('video');
-
+Route::get('/search', [FrontendController::class, 'search'])->name('search');
+Route::get('/search/suggestions', [FrontendController::class, 'searchSuggestions'])->name('search.suggestions');

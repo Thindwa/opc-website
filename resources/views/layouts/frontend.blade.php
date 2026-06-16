@@ -114,9 +114,8 @@
 
                 <!-- Template custom -->
                 <script src="{{asset('frontendassets/js/script.js')}}"></script>
+                @include('partials.frontend-alerts')
 
                 </div><!-- Body inner end -->
         </body>
  </html>
-
-

@@ -3,8 +3,11 @@
 /public/build
 /public/hot
 /public/storage
+/public/frontendassets/images
+/public/images
 /storage/*.key
 /storage/pail
+/storage/app/public
 /vendor
 .env
 .env.backup
@@ -21,6 +24,10 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+.DS_Store
+**/.DS_Store
 
 .phpstorm.meta.php
 _ide_helper.php
+preview.png
+preview-white.png

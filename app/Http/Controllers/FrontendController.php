@@ -10,7 +10,9 @@ use App\Models\Minister;
 use App\Models\Dminister;
 use App\Models\Department;
 use App\Models\Management;
+use App\Services\FrontendContentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Outerweb\ImageLibrary\Models\Image;
 use Illuminate\Support\Collection;
 
@@ -20,6 +22,8 @@ class FrontendController extends Controller
     {
         $page = Page::where('slug', 'home')->firstOrFail();
         $blocks = collect($page->content);
+        $featuredNews = News::latest()->take(4)->get();
+        $latestNews = News::latest()->take(3)->get();
 
         $imageIndex = $blocks->search(fn ($blk) => ($blk['type'] ?? null) === \App\Filament\Blocks\ImageTextBlock::class);
         $accordionIndex = $blocks->search(fn ($blk) => ($blk['type'] ?? null) === \App\Filament\Blocks\HomeAccordionBlock::class);
@@ -52,6 +56,8 @@ class FrontendController extends Controller
         return view('frontend.home', [
             'page' => $page,
             'blocks' => $blocks->all(),
+            'featuredNews' => $featuredNews,
+            'latestNews' => $latestNews,
             'seo' => $seo,
         ]);
     }
@@ -273,10 +279,12 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function documents()
+    public function documents(Request $request)
     {
         $documents = Document::all()->groupBy('category_type');
-        return view('frontend.documents', compact('documents'));
+        $activeCategory = $request->query('category');
+
+        return view('frontend.documents', compact('documents', 'activeCategory'));
     }
 
 
@@ -291,6 +299,36 @@ class FrontendController extends Controller
     {
         $videos = Video::latest()->paginate(6);
         return view('frontend.video', compact('videos'));
+    }
+
+    public function search(Request $request, FrontendContentService $frontendContentService)
+    {
+        $query = trim((string) $request->query('q', ''));
+        $results = $frontendContentService->search($query, 5);
+
+        $seo = [
+            'title' => $query
+                ? 'Search results for "' . $query . '" - ' . setting('general.brand_name', 'Office of the President and Cabinet')
+                : 'Search the website - ' . setting('general.brand_name', 'Office of the President and Cabinet'),
+            'description' => 'Search official news, documents, events, videos, pages, and leadership profiles.',
+        ];
+
+        return view('frontend.search', compact('query', 'results', 'seo'));
+    }
+
+    public function searchSuggestions(Request $request, FrontendContentService $frontendContentService)
+    {
+        $query = trim((string) $request->query('q', ''));
+
+        if ($query === '') {
+            return response()->json([
+                'query' => '',
+                'results' => [],
+                'total' => 0,
+            ]);
+        }
+
+        return response()->json($frontendContentService->search($query, 3));
     }
 
     public function contacts()

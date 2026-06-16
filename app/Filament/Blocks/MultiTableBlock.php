@@ -31,6 +31,8 @@ class MultiTableBlock extends Block
                     Components\Repeater::make('rows')
                         ->label('Rows')
                         ->collapsible() // Collapse each row
+                        ->reorderable()
+                        ->reorderableWithButtons()
                         ->schema([
                             Components\Repeater::make('cells')
                                 ->label('Cells')

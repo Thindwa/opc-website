@@ -11,9 +11,11 @@ use App\Policies\VideoPolicy;
 use App\Models\ActivityLog;
 use App\Models\Department;
 use App\Models\Video;
+use App\Services\FrontendContentService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
@@ -42,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
         $this->configureModels();
 
         $this->configureFilament();
+
+        $this->configureFrontendViews();
          	Livewire::setScriptRoute(function ($handle) {
     return Route::get('/vendor/livewire/livewire.js', $handle);
 });
@@ -73,5 +77,12 @@ class AppServiceProvider extends ServiceProvider
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
 
         Table::configureUsing(fn (Table $table) => $table->paginationPageOptions([10, 25, 50]));
+    }
+
+    private function configureFrontendViews(): void
+    {
+        View::composer('layouts.frontend', function ($view) {
+            $view->with('siteAnnouncementPopup', app(FrontendContentService::class)->getPopupAnnouncement());
+        });
     }
 }
