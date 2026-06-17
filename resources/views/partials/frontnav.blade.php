@@ -402,6 +402,7 @@
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ route('about') }}">About OPC</a></li>
                                         <li><a href="{{ route('executive') }}">The Executive</a></li>
                                         <li><a href="{{ route('profile') }}">His Excellency Profile</a></li>
                                         <li><a href="{{ route('management') }}">OPC Top Management</a></li>
