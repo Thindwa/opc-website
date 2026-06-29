@@ -50,3 +50,8 @@ Route::get('/photo', [FrontendController::class,'photo'])->name('photo');
 Route::get('/video', [FrontendController::class,'video'])->name('video');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 Route::get('/search/suggestions', [FrontendController::class, 'searchSuggestions'])->name('search.suggestions');
+
+// Livewire update route — custom path to bypass ModSecurity
+Route::post('/opc-lw-update', [\Livewire\Mechanisms\HandleRequests\HandleRequests::class, 'handleUpdate'])
+    ->middleware('web')
+    ->name('livewire.update');
