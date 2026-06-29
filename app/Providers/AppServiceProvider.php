@@ -46,9 +46,29 @@ class AppServiceProvider extends ServiceProvider
         $this->configureFilament();
 
         $this->configureFrontendViews();
-         	Livewire::setScriptRoute(function ($handle) {
-    return Route::get('/vendor/livewire/livewire.js', $handle);
-});
+
+        $this->configureLivewireScriptRoute();
+
+        $this->configureSubdirectoryUrl();
+    }
+
+    private function configureLivewireScriptRoute(): void
+    {
+        Livewire::setScriptRoute(function ($handle) {
+            return Route::get('/vendor/livewire/livewire.js', $handle);
+        });
+    }
+
+    private function configureSubdirectoryUrl(): void
+    {
+        if (app()->environment('local')) {
+            return;
+        }
+
+        $appUrl = config('app.url');
+        if ($appUrl) {
+            $this->app->make('url')->forceRootUrl($appUrl);
+        }
     }
 
     private function configurePolicies(): void
