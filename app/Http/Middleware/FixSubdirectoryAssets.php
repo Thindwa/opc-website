@@ -17,9 +17,9 @@ class FixSubdirectoryAssets
             && str_contains($response->headers->get('Content-Type'), 'text/html')
             && method_exists($response, 'getContent')
         ) {
-            $basePath = $request->getBasePath();
+            $basePath = $this->getBasePath($request);
 
-            if ($basePath && $basePath !== '/') {
+            if ($basePath) {
                 $content = $response->getContent();
                 $correctPath = $basePath . '/livewire/update';
 
@@ -46,5 +46,24 @@ class FixSubdirectoryAssets
         }
 
         return $response;
+    }
+
+    private function getBasePath(Request $request): string
+    {
+        $basePath = $request->getBasePath();
+        if ($basePath && $basePath !== '/') {
+            return $basePath;
+        }
+
+        $appUrl = config('app.url');
+        if ($appUrl) {
+            $parsed = parse_url($appUrl);
+            $path = $parsed['path'] ?? '';
+            if ($path && $path !== '/') {
+                return rtrim($path, '/');
+            }
+        }
+
+        return '';
     }
 }
