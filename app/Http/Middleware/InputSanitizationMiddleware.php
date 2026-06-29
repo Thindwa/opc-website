@@ -54,6 +54,11 @@ class InputSanitizationMiddleware
             return true;
         }
 
+        // Skip for Livewire requests (they send X-Livewire header, not X-Requested-With)
+        if ($request->header('X-Livewire')) {
+            return true;
+        }
+
         // Skip for admin panel requests
         if (str_starts_with($request->path(), 'admin')) {
             return true;
