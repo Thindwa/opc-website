@@ -32,7 +32,14 @@ class AppServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        //
+        // Workaround for Laravel route precedence issue:
+        // Register the default Livewire update route with a unique name,
+        // so our custom route in web.php can use "livewire.update" without conflict.
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle)
+                ->name('livewire.update.default')
+                ->middleware(['web']);
+        });
     }
 
     public function boot(): void

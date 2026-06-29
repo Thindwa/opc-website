@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Livewire;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\DepartmentController;
@@ -51,7 +52,7 @@ Route::get('/video', [FrontendController::class,'video'])->name('video');
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 Route::get('/search/suggestions', [FrontendController::class, 'searchSuggestions'])->name('search.suggestions');
 
-// Livewire update route — custom path to bypass ModSecurity
-Route::post('/opc-lw-update', [\Livewire\Mechanisms\HandleRequests\HandleRequests::class, 'handleUpdate'])
-    ->middleware('web')
-    ->name('livewire.update');
+// Livewire update route — custom path to bypass ModSecurity, registered via setUpdateRoute
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/opc-lw-update', $handle)->middleware('web');
+});
