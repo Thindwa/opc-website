@@ -98,6 +98,6 @@ class AdminPanelProvider extends PanelProvider
 
     private function getLivewireUpdateUri(): string
     {
-        return url('/custom/livewire/update');
+        return url('/opc-website/livewire/update');
     }
 }
