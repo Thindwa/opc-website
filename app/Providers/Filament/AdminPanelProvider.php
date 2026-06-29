@@ -7,6 +7,7 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Hasnayeen\Themes\ThemesPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
@@ -88,6 +89,24 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->renderHook(
+                PanelsRenderHook::HEAD_START,
+                fn () => '<script data-navigate-once="true" data-update-uri="' . $this->getLivewireUpdateUri() . '"></script>',
+            )
             ->viteTheme('resources/css/filament/admin/theme.css');
+    }
+
+    private function getLivewireUpdateUri(): string
+    {
+        $basePath = request()->getBasePath();
+        if (! $basePath || $basePath === '/') {
+            $appUrl = config('app.url');
+            if ($appUrl) {
+                $parsed = parse_url($appUrl);
+                $basePath = $parsed['path'] ?? '';
+            }
+        }
+
+        return rtrim($basePath, '/') . '/livewire/update';
     }
 }
