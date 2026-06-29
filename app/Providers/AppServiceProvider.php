@@ -49,13 +49,22 @@ class AppServiceProvider extends ServiceProvider
 
         $this->configureLivewireScriptRoute();
 
+        $this->configureLivewireUpdateRoute();
+
         $this->configureSubdirectoryUrl();
     }
 
     private function configureLivewireScriptRoute(): void
     {
         Livewire::setScriptRoute(function ($handle) {
-            return Route::get('/opc-lw-script', $handle);
+            return Route::get('/custom/livewire/livewire.js', $handle);
+        });
+    }
+
+    private function configureLivewireUpdateRoute(): void
+    {
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/custom/livewire/update', $handle)->middleware('web');
         });
     }
 
