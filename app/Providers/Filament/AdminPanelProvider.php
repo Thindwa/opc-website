@@ -98,15 +98,6 @@ class AdminPanelProvider extends PanelProvider
 
     private function getLivewireUpdateUri(): string
     {
-        $basePath = request()->getBasePath();
-        if (! $basePath || $basePath === '/') {
-            $appUrl = config('app.url');
-            if ($appUrl) {
-                $parsed = parse_url($appUrl);
-                $basePath = $parsed['path'] ?? '';
-            }
-        }
-
-        return rtrim($basePath, '/') . '/livewire/update';
+        return url('/opc-lw-update');
     }
 }

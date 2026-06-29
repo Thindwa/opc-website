@@ -14,9 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         // Security headers middleware (safe to enable)
         $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
 
-        // Fix asset URLs for subdirectory deployments (Livewire update URI, etc.)
-        $middleware->append(\App\Http\Middleware\FixSubdirectoryAssets::class);
-
         // Rate limiting and CSRF protection
         $middleware->throttleApi();
         $middleware->validateCsrfTokens();
