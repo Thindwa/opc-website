@@ -1,15 +1,12 @@
-<IfModule mod_security.c>
-    <If "%{REQUEST_URI} =~ m#/livewire/update#">
-        SecRuleEngine Off
-    </If>
-</IfModule>
-
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
+
+    # Disable ModSecurity for Livewire update endpoint (bypass via env var)
+    RewriteRule ^livewire/update - [E=nosecrule:1,NE]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
