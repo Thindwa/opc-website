@@ -91,7 +91,19 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_START,
-                fn () => '<script data-navigate-once="true" data-update-uri="' . $this->getLivewireUpdateUri() . '"></script>',
+                fn () => '<script data-navigate-once="true" data-update-uri="' . $this->getLivewireUpdateUri() . '">
+    (function(){
+        var origFetch = window.fetch;
+        window.fetch = function(){
+            var args = arguments;
+            if(args[1] && args[1].method==="POST" && args[0] && typeof args[0]==="string" && args[0].includes("lw.php")){
+                args[1].headers = args[1].headers || {};
+                args[1].headers["Content-Type"] = "text/plain;charset=UTF-8";
+            }
+            return origFetch.apply(this, args);
+        };
+    })();
+</script>',
             )
             ->viteTheme('resources/css/filament/admin/theme.css');
     }
